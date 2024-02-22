@@ -9,7 +9,6 @@ const routes = [
     children: [
       {
         path: '/',
-        name: 'guest.home',
         redirect: '/login',
       },
       {
@@ -21,9 +20,25 @@ const routes = [
         path: '/register',
         name: "register",
         component: () => import('@/app/features/register/presentation/IndexView.vue')
-      }
+      },
     ]
   },
+  {
+    path: '/',
+    component: () => import('@/layouts/AppLayout.vue'),
+    children: [
+      {
+        path: 'products',
+        children: [
+          {
+            path: 'create',
+            name: 'product.create',
+            component: () => import('@/app/features/product/presentation/CreateView.vue')
+          }
+        ]
+      }
+    ]
+  }
   /* {
     path: '/about',
     name: 'about',

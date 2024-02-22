@@ -21,5 +21,16 @@
     "newProduct": "Nouveau Produit",
     "password": "Mot de passe",
     "tel": "Téléphone"
+  },
+  "layouts": {
+    "appLayout": {
+      "containersList": "Liste de conteneurs",
+      "dashboard": "Tableau de bord",
+      "editProduct": "Modifier Produit",
+      "inventory": "Inventaire",
+      "newContainer": "Nouveau conteneur",
+      "newProduct": "Nouveau Produit",
+      "productsList": "Liste des produits"
+    }
   }
 }
