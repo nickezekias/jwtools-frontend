@@ -1,3 +1,4 @@
+import 'primevue/resources/themes/aura-light-green/theme.css'
 import './assets/main.css'
 
 import { createApp } from 'vue'
@@ -7,6 +8,9 @@ import App from './App.vue'
 import router from './router'
 import { useI18n } from 'vue-i18n'
 import i18n from './locale/i18n'
+import PrimeVue from 'primevue/config'
+
+import Button from "primevue/button"
 
 const app = createApp(App, {
   setup() {
@@ -18,5 +22,8 @@ const app = createApp(App, {
 app.use(createPinia())
 app.use(router)
 app.use(i18n)
+app.use(PrimeVue, { ripple: true })
+
+app.component('PrimeButton', Button)
 
 app.mount('#app')
