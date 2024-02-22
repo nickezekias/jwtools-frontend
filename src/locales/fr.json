@@ -1,3 +1,25 @@
 {
-  "hello": "Bonjour"
+  "actions": {
+    "login": "Me Connecter",
+    "register": "M'inscrire"
+  },
+  "app": {
+    "features": {
+      "login": {
+        "login": "Me Connecter"
+      },
+      "register": {
+        "register": "M'inscrire"
+      }
+    }
+  },
+  "labels": {
+    "email": "Email",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "login": "Me Connecter",
+    "newProduct": "Nouveau Produit",
+    "password": "Mot de passe",
+    "tel": "Téléphone"
+  }
 }

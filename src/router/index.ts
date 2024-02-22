@@ -1,23 +1,53 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import GuestLayout from '@/layouts/GuestLayout.vue'
+import { useAppStore } from '@/stores/app'
+
+const routes = [
+  {
+    path: '',
+    component: GuestLayout,
+    children: [
+      {
+        path: '/',
+        name: 'guest.home',
+        redirect: '/login',
+      },
+      {
+        path: '/login',
+        name: "login",
+        component: () => import('@/app/features/login/presentation/IndexView.vue')
+      },
+      {
+        path: '/register',
+        name: "register",
+        component: () => import('@/app/features/register/presentation/IndexView.vue')
+      }
+    ]
+  },
+  /* {
+    path: '/about',
+    name: 'about',
+    // route level code-splitting
+    // this generates a separate chunk (About.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/AboutView.vue')
+  } */
+]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView
-    },
-    /* {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
-    } */
-  ]
+  routes
+})
+
+router.beforeEach((to, from , next) => {
+  const appStore = useAppStore()
+  appStore.setAppLoading(true)
+  return next()
+})
+
+router.afterEach(() => {
+  const appStore = useAppStore()
+  appStore.setAppLoading(false)
 })
 
 export default router
