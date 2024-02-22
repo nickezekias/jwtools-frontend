@@ -8,7 +8,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import { useI18n } from 'vue-i18n'
-import i18n from './locale/i18n'
+import i18n from './locales/i18n'
 import PrimeVue from 'primevue/config'
 
 import Button from "primevue/button"
