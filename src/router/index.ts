@@ -25,7 +25,7 @@ const routes = [
   },
   {
     path: '/',
-    component: () => import('@/layouts/AppLayout.vue'),
+    component: () => import('@/layouts/AppLayoutIndex.vue'),
     children: [
       {
         path: 'products',

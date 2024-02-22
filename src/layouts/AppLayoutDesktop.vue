@@ -128,29 +128,8 @@ const search = ref('')
           </template>
 
           <template #end>
-            <div class="flex md:hidden align-items-center gap-2">
-              <PrimeButton
-                @click="
-                  () => {
-                    router.push({ name: 'login' })
-                  }
-                "
-                to="login"
-                size="small"
-                :label="$t('actions.login')"
-                text
-                plain
-              />
-              <PrimeButton
-                size="small"
-                @click="router.push({ name: 'register' })"
-                :label="$t('actions.register')"
-                text
-                plain
-              />
-            </div>
-            <div class="hidden md:flex align-items-center gap-3">
-              <PrimeAvatar v-badge.danger="4" class="p-overlay-badge border-1 border-circle bg-white" icon="pi pi-user" />
+            <div class="flex align-items-center gap-3">
+              <PrimeAvatar v-badge.danger="4" class="p-overlay-badge border-1 border-circle bg-white" icon="pi pi-bell" />
               <PrimeAvatar
                 image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
                 style="width: 32px; height: 32px"
