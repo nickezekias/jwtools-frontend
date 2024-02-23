@@ -1,4 +1,4 @@
-<script setup lang="">
+<script setup lang="ts">
 import { ref } from 'vue'
 
 const firstName = ref('')
