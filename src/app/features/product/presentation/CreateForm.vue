@@ -1,7 +1,12 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 
 import FileUploader from '@/components/FileUploader.vue'
+import { useProductStore } from '@/stores/product';
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
+const productStore = useProductStore()
 
 const productAttributes = ref([])
 const barcode = ref('BC-849384')
@@ -37,10 +42,43 @@ const containers = ref([
 ])
 const states = ref(['Nouveau', 'Bon', 'Endommagé', 'Pièces manquantes'])
 const statuses = reactive(['Published', 'Draft'])
+
+const form = computed(() => {
+  return {
+    "attributes": productAttributes.value,
+    barcode: barcode.value,
+    brand: brand.value,
+    categories: categories.value,
+    color: `${color.value}#${colorPicker.value}`,
+    container: container.value,
+    cost: cost.value,
+    description: description.value,
+    images: images.value,
+    locale: locale.value,
+    name: name.value,
+    price: price.value,
+    quantity: quantity.value,
+    qrCode: qrCode.value,
+    serial: serial.value,
+    sku: sku.value,
+    slug: slug,
+    state: state.value,
+    tags: tags.value,
+    type: type.value,
+    unitOfMeasure: unitOfMeasure.value,
+    warehouse: warehouse.value
+
+  }
+});
+
+async function submit() {
+  const response = await productStore.create(form.value)
+  console.log(response)
+}
 </script>
 
 <template>
-  <div class="grid w-full m-0">
+  <form class="grid w-full m-0">
     <div class="col-12 lg:col-8">
       <PrimeCard class="w-full">
         <template #title
@@ -217,5 +255,11 @@ const statuses = reactive(['Published', 'Draft'])
         </template>
       </PrimeCard>
     </div>
-  </div>
+    <div class="col-12 mt-5">
+      <div class="flex justify-content-end gap-4">
+        <PrimeButton @click="router.push({ name:'products.index' })" size="large" severity="secondary" :label="$t('actions.cancel')" />
+        <PrimeButton @click="submit" size="large" :label="$t('actions.save')" :loading="productStore.loading" />
+      </div>
+    </div>
+  </form>
 </template>

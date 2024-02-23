@@ -31,8 +31,13 @@ const routes = [
         path: 'products',
         children: [
           {
+            path: '',
+            name: 'products.index',
+            // component: () => import('@/app/features/product/presentation/CreateView.vue')
+          },
+          {
             path: 'create',
-            name: 'product.create',
+            name: 'products.create',
             component: () => import('@/app/features/product/presentation/CreateView.vue')
           }
         ]

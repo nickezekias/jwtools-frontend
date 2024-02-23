@@ -1,5 +1,6 @@
 {
   "actions": {
+    "cancel":"Annuler",
     "login": "Me Connecter",
     "register": "M'inscrire",
     "save": "Enregistrer"
