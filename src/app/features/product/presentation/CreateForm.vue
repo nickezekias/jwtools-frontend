@@ -44,12 +44,12 @@ const statuses = reactive(['Published', 'Draft'])
     <div class="col-12 lg:col-8">
       <PrimeCard class="w-full">
         <template #title
-          ><span class="text-2xl font-semibold">{{
+          ><span class="text-lg md:text-2xl font-semibold">{{
             $t('app.features.product.create.productInformation')
           }}</span></template
         >
         <template #content>
-          <div class="field text-lg">
+          <div class="field text-base md:text-lg">
             <label for="name">{{ $t('labels.name') }}</label>
             <input
               v-model="name"
@@ -104,7 +104,7 @@ const statuses = reactive(['Published', 'Draft'])
             </div>
           </div>
 
-          <div class="field text-lg">
+          <div class="field text-base md:text-lg">
             <label for="name">{{ $t('labels.description') }}</label>
             <PrimeEditor v-model="description" class="w-full" editorStyle="height:10rem" />
           </div>
@@ -125,13 +125,13 @@ const statuses = reactive(['Published', 'Draft'])
     <div class="col-12 lg:col-4">
       <PrimeCard class="w-full">
         <template #title
-          ><span class="text-2xl font-semibold">{{
+          ><span class="text-lg md:text-2xl font-semibold">{{
             $t('app.features.product.create.organize')
           }}</span></template
         >
 
         <template #content>
-          <div class="field text-lg">
+          <div class="field text-base md:text-lg">
             <label for="name">{{ $t('labels.container') }}</label>
             <PrimeDropdown
               v-model="container"
@@ -140,7 +140,7 @@ const statuses = reactive(['Published', 'Draft'])
               class="w-full py-1"
             />
           </div>
-          <div class="field text-lg">
+          <div class="field text-base md:text-lg">
             <label for="name">{{ $t('labels.category') }}</label>
             <PrimeTreeSelect
               v-model="categories"
@@ -149,7 +149,7 @@ const statuses = reactive(['Published', 'Draft'])
               class="w-full py-1"
             />
           </div>
-          <div class="field text-lg">
+          <div class="field text-base md:text-lg">
             <label for="name">{{ $t('labels.status') }}</label>
             <PrimeDropdown
               v-model="status"
@@ -158,7 +158,7 @@ const statuses = reactive(['Published', 'Draft'])
               class="w-full py-1"
             />
           </div>
-          <div class="field text-lg">
+          <div class="field text-base md:text-lg">
             <label for="name">{{ $t('labels.state') }}</label>
             <PrimeDropdown
               v-model="state"
@@ -167,7 +167,7 @@ const statuses = reactive(['Published', 'Draft'])
               class="w-full py-1"
             />
           </div>
-          <div class="field text-lg">
+          <div class="field text-base md:text-lg">
             <label for="tags">{{ $t('labels.tag', 2) }}</label>
             <div class="p-fluid">
               <PrimeChips v-model="tags" separator="," inputClass="py-1" />
@@ -178,12 +178,12 @@ const statuses = reactive(['Published', 'Draft'])
 
       <PrimeCard class="w-full mt-4">
         <template #title
-          ><span class="text-2xl font-semibold">{{
+          ><span class="text-lg md:text-2xl font-semibold">{{
             $t('app.features.product.create.quantityAndCost')
           }}</span></template
         >
         <template #content>
-          <div class="field text-lg">
+          <div class="field text-base md:text-lg">
             <label for="quantity" class="w-full">{{ $t('labels.quantity') }}</label>
             <div class="p-fluid">
               <PrimeInputNumber
@@ -205,7 +205,7 @@ const statuses = reactive(['Published', 'Draft'])
             </div>
           </div>
 
-          <div class="field text-lg">
+          <div class="field text-base md:text-lg">
             <label for="cost">{{ $t('labels.cost') }}</label>
             <input
               v-model="cost"

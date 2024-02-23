@@ -1,7 +1,8 @@
 {
   "actions": {
     "login": "Me Connecter",
-    "register": "M'inscrire"
+    "register": "M'inscrire",
+    "save": "Enregistrer"
   },
   "app": {
     "features": {
