@@ -26,7 +26,7 @@ const search = ref('')
         :baseZIndex="0"
         :autoZIndex="false"
         style="width: 265px; z-index: 0!important;"
-        class="text-sm flex relative"
+        class="text-sm flex relative shadow-1"
       >
         <template #container>
           <div class="flex flex-column h-full">
@@ -138,7 +138,7 @@ const search = ref('')
           </template>
         </PrimeToolbar>
 
-        <div class="content flex-grow-1 mx-4">
+        <div class="content mx-4">
           <RouterView />
         </div>
       </div>

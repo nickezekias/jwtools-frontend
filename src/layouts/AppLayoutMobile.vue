@@ -10,42 +10,42 @@ const search = ref('')
 </script>
 
 <template>
-  <PrimeProgressBar
-    v-if="appStore.appLoading"
-    mode="indeterminate"
-    class="app-progress-bar"
-  ></PrimeProgressBar>
-  <PrimeToolbar
-    class="m-1 my-2 shadow-1"
-  >
-    <template #start>
-      <PrimeIconField iconPosition="left">
-        <PrimeInputIcon>
-          <i class="pi pi-search" />
-        </PrimeInputIcon>
-        <PrimeInputText
-          class="py-2 border-none shadow-none"
-          v-model="search"
-          placeholder="Search"
-        />
-      </PrimeIconField>
-    </template>
-
-    <template #end>
-      <!-- Mobile nav items -->
-      <div class="flex align-items-center gap-2">
-        <PrimeAvatar
-          v-badge.danger="4"
-          class="p-overlay-badge border-1 border-circle bg-white"
-          icon="pi pi-bell"
-        />
-        <!-- <PrimeAvatar
-          image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
-          style="width: 32px; height: 32px"
-        /> -->
-      </div>
-    </template>
-  </PrimeToolbar>
+  <div class="h-screen w-screen">
+    <PrimeProgressBar
+      v-if="appStore.appLoading"
+      mode="indeterminate"
+      class="app-progress-bar"
+    ></PrimeProgressBar>
+    <PrimeToolbar
+      class="m-1 my-2 shadow-1 py-2"
+    >
+      <template #start>
+        <PrimeIconField iconPosition="left">
+          <PrimeInputIcon>
+            <i class="pi pi-search" />
+          </PrimeInputIcon>
+          <PrimeInputText
+            class="py-2 border-none shadow-none"
+            v-model="search"
+            placeholder="Search"
+          />
+        </PrimeIconField>
+      </template>
+  
+      <template #end>
+        <div class="flex align-items-center gap-2">
+          <PrimeAvatar
+            v-badge.danger="4"
+            class="p-overlay-badge border-1 border-circle bg-white"
+            icon="pi pi-bell"
+          />
+        </div>
+      </template>
+    </PrimeToolbar>
+    <main>
+      <RouterView />
+    </main>
+  </div>
 </template>
 
 <style scoped>

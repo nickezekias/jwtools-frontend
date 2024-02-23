@@ -8,19 +8,40 @@
       "login": {
         "login": "Me Connecter"
       },
+      "product": {
+        "create": {
+          "organize": "Rangement et état",
+          "productImage": "Image",
+          "productInformation": "Information du produit",
+          "quantityAndCost": "Quantité et coût"
+        }
+      },
       "register": {
         "register": "M'inscrire"
       }
     }
   },
   "labels": {
+    "barcode": "Barcode",
+    "brand": "Marque",
+    "category": "Catégorie | Catégories",
+    "color": "Couleur",
+    "container": "Conteneur",
+    "cost": "Coût",
+    "description": "Description",
     "email": "Email",
     "firstName": "Prénom",
     "lastName": "Nom",
     "login": "Me Connecter",
+    "name": "Name",
     "newProduct": "Nouveau Produit",
     "password": "Mot de passe",
     "product": "Produit | Produits",
+    "quantity": "Quantité",
+    "sku": "SKU",
+    "state": "Etat",
+    "status": "Statut",
+    "tag": "Tag | Tags",
     "tel": "Téléphone"
   },
   "layouts": {
@@ -33,5 +54,12 @@
       "newProduct": "Nouveau Produit",
       "productsList": "Liste des produits"
     }
+  },
+  "placeholders": {
+    "fileUploader": "Tirer et déposer vos fichiers ici pour les uploader",
+    "selectCategory": "Sélectionner une catégorie",
+    "selectContainer": "Sélectionner un conteneur",
+    "selectState": "Sélectionner un état",
+    "selectStatus": "Sélectionner un statut"
   }
 }
