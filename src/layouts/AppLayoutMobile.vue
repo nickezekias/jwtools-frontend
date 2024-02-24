@@ -20,7 +20,7 @@ const search = ref('')
       class="m-1 my-2 shadow-1 py-2"
     >
       <template #start>
-        <PrimeIconField iconPosition="left">
+        <!-- <PrimeIconField iconPosition="left">
           <PrimeInputIcon>
             <i class="pi pi-search" />
           </PrimeInputIcon>
@@ -29,13 +29,14 @@ const search = ref('')
             v-model="search"
             placeholder="Search"
           />
-        </PrimeIconField>
+        </PrimeIconField> -->
+        <span class="text-xl text-primary font-semibold">JWTools</span>
       </template>
   
       <template #end>
         <div class="flex align-items-center gap-2">
           <PrimeAvatar
-            v-badge.danger="4"
+            v-badge.danger="1"
             class="p-overlay-badge border-1 border-circle bg-white"
             icon="pi pi-bell"
           />

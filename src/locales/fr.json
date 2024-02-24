@@ -15,7 +15,8 @@
           "organize": "Rangement et état",
           "productImage": "Image",
           "productInformation": "Information du produit",
-          "quantityAndCost": "Quantité et coût"
+          "quantityAndCost": "Quantité et coût",
+          "successMessage": "Le matériel à été ajouté avec succès"
         }
       },
       "register": {
@@ -32,6 +33,7 @@
     "cost": "Coût",
     "description": "Description",
     "email": "Email",
+    "error": "Erreur",
     "firstName": "Prénom",
     "lastName": "Nom",
     "login": "Me Connecter",
@@ -39,6 +41,7 @@
     "newProduct": "Nouveau Produit",
     "password": "Mot de passe",
     "product": "Produit | Produits",
+    "productList": "Liste du matériel",
     "quantity": "Quantité",
     "sku": "SKU",
     "state": "Etat",

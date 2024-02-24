@@ -2,36 +2,42 @@
 import { computed, reactive, ref } from 'vue'
 
 import FileUploader from '@/components/FileUploader.vue'
-import { useProductStore } from '@/stores/product';
-import { useRouter } from 'vue-router';
+import { useProductStore } from '@/stores/product'
+import { useRouter } from 'vue-router'
+import { useToast } from 'primevue/usetoast'
+import { useI18n } from 'vue-i18n'
+
+import { getApiErrors } from '@/app/utils/helper'
+import { AxiosError } from 'axios'
 
 const router = useRouter()
 const productStore = useProductStore()
+const { t } = useI18n()
+const toast = useToast()
 
 const productAttributes = ref([])
-const barcode = ref('BC-849384')
+const barcode = ref('')
 const brand = ref('')
 const categories = ref('')
 const color = ref()
 const colorPicker = ref('')
-const container = ref('Caisse cables audio')
+const container = ref('')
 const cost = ref('')
 const description = ref('')
 const images = ref([])
-const locale = ref('')
-const name = ref('HDMI Cable')
+const locale = ref('fr-FR')
+const name = ref('')
 const price = cost
 const quantity = ref(1)
 const qrCode = ref('')
 const serial = ref('')
-const sku = ref('HDC-08328')
-const slug = name.value.toLowerCase().replace(' ', '-')
+const sku = ref('')
 const state = ref('')
 const status = ref('')
 const tags = ref([])
 const type = ref('')
 const unitOfMeasure = ref('')
-const warehouse = ref('')
+const warehouse = ref('Owendo')
 
 const categoriesList = reactive(['Audio', 'Video', 'Mic'])
 const containers = ref([
@@ -44,16 +50,20 @@ const states = ref(['Nouveau', 'Bon', 'Endommagé', 'Pièces manquantes'])
 const statuses = reactive(['Published', 'Draft'])
 
 const form = computed(() => {
+  let colorNameAndHexCode = color.value
+  if (colorNameAndHexCode) {
+    colorNameAndHexCode = `${color.value}#${colorPicker.value}`
+  }
   return {
-    "attributes": productAttributes.value,
+    productAttributes: productAttributes.value.toString(),
     barcode: barcode.value,
     brand: brand.value,
     categories: categories.value,
-    color: `${color.value}#${colorPicker.value}`,
+    color: colorNameAndHexCode,
     container: container.value,
     cost: cost.value,
     description: description.value,
-    images: images.value,
+    images: images.value.toString(),
     locale: locale.value,
     name: name.value,
     price: price.value,
@@ -61,19 +71,42 @@ const form = computed(() => {
     qrCode: qrCode.value,
     serial: serial.value,
     sku: sku.value,
-    slug: slug,
+    slug: name.value.toLowerCase().replace(' ', '-'),
     state: state.value,
-    tags: tags.value,
+    status: status.value,
+    tags: tags.value.toString(),
     type: type.value,
     unitOfMeasure: unitOfMeasure.value,
     warehouse: warehouse.value
-
   }
-});
+})
 
 async function submit() {
-  const response = await productStore.create(form.value)
-  console.log(response)
+  productStore.setLoading(true)
+  try {
+    const response = await productStore.create(form.value)
+    if (response) {
+      toast.add({
+        severity: 'success',
+        summary: 'Info',
+        detail: t('app.features.product.create.successMessage'),
+        life: 3000
+      })
+      window.setTimeout(() => {
+        router.push({ name: 'products.index' })
+      }, 3000)
+    }
+  } catch (error) {
+    console.log(getApiErrors(error as AxiosError))
+    toast.add({
+      severity: 'error',
+      summary: t("labels.error"),
+      detail: error,
+      life: 3000
+    })
+  } finally {
+    productStore.setLoading(false)
+  }
 }
 </script>
 
@@ -257,8 +290,18 @@ async function submit() {
     </div>
     <div class="col-12 mt-5">
       <div class="flex justify-content-end gap-4">
-        <PrimeButton @click="router.push({ name:'products.index' })" size="large" severity="secondary" :label="$t('actions.cancel')" />
-        <PrimeButton @click="submit" size="large" :label="$t('actions.save')" :loading="productStore.loading" />
+        <PrimeButton
+          @click="router.push({ name: 'products.index' })"
+          size="large"
+          severity="secondary"
+          :label="$t('actions.cancel')"
+        />
+        <PrimeButton
+          @click="submit"
+          size="large"
+          :label="$t('actions.save')"
+          :loading="productStore.loading"
+        />
       </div>
     </div>
   </form>

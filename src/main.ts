@@ -20,6 +20,8 @@ import Button from "primevue/button"
 import Card from 'primevue/card';
 import Chips from 'primevue/chips';
 import ColorPicker from 'primevue/colorpicker';
+import Column from 'primevue/column';
+import DataTable from 'primevue/datatable'
 import Dialog from 'primevue/dialog';
 import Dropdown from 'primevue/dropdown';
 import Editor from 'primevue/editor';
@@ -64,6 +66,8 @@ app.component('PrimeButton', Button)
 app.component('PrimeCard', Card)
 app.component('PrimeChips', Chips)
 app.component('PrimeColorPicker', ColorPicker)
+app.component('PrimeColumn', Column)
+app.component('PrimeDataTable', DataTable)
 app.component('PrimeDialog', Dialog)
 app.component('PrimeDropdown', Dropdown)
 app.component('PrimeEditor', Editor)

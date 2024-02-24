@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import GuestLayout from '@/layouts/GuestLayout.vue'
 import { useAppStore } from '@/stores/app'
 
-const routes = [
+const routes: any = [
   {
     path: '',
     component: GuestLayout,
@@ -33,7 +33,7 @@ const routes = [
           {
             path: '',
             name: 'products.index',
-            // component: () => import('@/app/features/product/presentation/CreateView.vue')
+            component: () => import('@/app/features/product/presentation/IndexView.vue')
           },
           {
             path: 'create',

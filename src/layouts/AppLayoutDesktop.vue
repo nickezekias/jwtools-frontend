@@ -118,18 +118,18 @@ const search = ref('')
           class="m-1 mt-3 md:m-4 md:mt-4 shadow-1"
           style="border-radius: 8px; padding: 1rem 1rem 1rem 1.5rem"
         >
-          <template #start>
+          <!-- <template #start>
             <PrimeIconField iconPosition="left">
               <PrimeInputIcon>
                 <i class="pi pi-search" />
               </PrimeInputIcon>
               <PrimeInputText class="py-2 border-none shadow-none" v-model="search" placeholder="Search" />
             </PrimeIconField>
-          </template>
+          </template> -->
 
           <template #end>
             <div class="flex align-items-center gap-3">
-              <PrimeAvatar v-badge.danger="4" class="p-overlay-badge border-1 border-circle bg-white" icon="pi pi-bell" />
+              <PrimeAvatar v-badge.danger="1" class="p-overlay-badge border-1 border-circle bg-white" icon="pi pi-bell" />
               <PrimeAvatar
                 image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
                 style="width: 32px; height: 32px"

@@ -1,9 +1,9 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { DBGetQueryFilter } from '@/@types/model'
-import objectService from '@/app/features/product/adapter/productService'
+import objectService from '@/app/features/container/adapter/containerService'
 
-export const useProductStore = defineStore('product', () => {
+export const useContainerStore = defineStore('container', () => {
   const loading = ref(false)
   const objects = ref([])
 
@@ -11,7 +11,7 @@ export const useProductStore = defineStore('product', () => {
     if (!filter) {
       filter = {
         itemsPerPage: -1,
-        sortBy: ['product.name']
+        sortBy: ['container.name']
       }
     }
     const response = await objectService.getAll(filter)
