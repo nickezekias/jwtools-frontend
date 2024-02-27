@@ -9,7 +9,9 @@ const isMobile = computed(() => {
 </script>
 
 <template>
-  <PrimeToast />
-  <AppLayoutMobile v-if="isMobile" />
-  <AppLayoutDesktop v-else/>
+  <div>
+    <PrimeToast />
+    <AppLayoutMobile v-if="isMobile" />
+    <AppLayoutDesktop v-else/>
+  </div>
 </template>
