@@ -1,7 +1,7 @@
 import 'primeflex/primeflex.css'
 import 'primevue/resources/themes/aura-light-green/theme.css'
 import 'primeicons/primeicons.css'
-import './assets/main.css'
+import './assets/css/main.scss'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
@@ -31,6 +31,7 @@ import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
 import InputNumber from 'primevue/inputnumber';
 import InputText from 'primevue/inputtext';
+import PanelMenu from 'primevue/panelmenu';
 import Password from 'primevue/password';
 import ProgressBar from 'primevue/progressbar';
 import Ripple from 'primevue/ripple';
@@ -77,6 +78,7 @@ app.component('PrimeIconField', IconField)
 app.component('PrimeInputIcon', InputIcon)
 app.component('PrimeInputNumber', InputNumber)
 app.component('PrimeInputText', InputText)
+app.component('PrimePanelMenu', PanelMenu)
 app.component('PrimePassword', Password)
 app.component('PrimeProgressBar', ProgressBar)
 app.component('PrimeSidebar', Sidebar)
