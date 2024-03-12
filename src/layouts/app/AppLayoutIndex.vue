@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AppLayoutDesktop from './AppLayoutDesktop.vue';
+import AppLayoutDesktop from './desktop/AppLayout.vue';
 import AppLayoutMobile from './AppLayoutMobile.vue';
 import { computed } from 'vue'
 
@@ -14,4 +14,4 @@ const isMobile = computed(() => {
     <AppLayoutMobile v-if="isMobile" />
     <AppLayoutDesktop v-else/>
   </div>
-</template>
+</template>./desktop/AppLayout.vue
