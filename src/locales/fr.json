@@ -7,6 +7,11 @@
   },
   "app": {
     "features": {
+      "container": {
+        "index": {
+          "emptyMessage":"Aucun conteneur trouvé"
+        }
+      },
       "login": {
         "login": "Me Connecter"
       },
@@ -29,26 +34,32 @@
     }
   },
   "labels": {
+    "action": "Action | Actions",
     "barcode": "Barcode",
     "brand": "Marque",
     "category": "Catégorie | Catégories",
     "color": "Couleur",
     "container": "Conteneur | Conteneurs",
+    "containerList": "Liste des conteneurs",
     "cost": "Coût",
     "description": "Description",
+    "delete": "Supprimer",
+    "edit": "Modifier",
     "email": "Email",
     "error": "Erreur",
     "firstName": "Prénom",
     "lastName": "Nom",
+    "loadingMessage": "Chargement en cours...",
     "login": "Me Connecter",
     "name": "Name",
+    "newContainer": "Nouveau conteneur",
     "newProduct": "Nouveau Matériel",
     "password": "Mot de passe",
     "product": "Matériel | Matériaux",
     "productList": "Liste du matériel",
     "quantity": "Quantité",
     "sku": "SKU",
-    "state": "Etat",
+    "state": "État",
     "status": "Statut",
     "tag": "Tag | Tags",
     "tel": "Téléphone"

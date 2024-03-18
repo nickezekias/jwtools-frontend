@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { FilterMatchMode } from 'primevue/api';
 import { useToast } from 'primevue/usetoast'
-import { useContainerStore } from '@/stores/product'
+import { useContainerStore } from '@/stores/container'
 import { getApiErrors } from '@/app/utils/helper'
 import { AxiosError } from 'axios'
 import { useRouter } from 'vue-router';
@@ -11,7 +11,7 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 const toast = useToast()
 const router = useRouter()
-const containerStore = useContainerStore()
+const objectStore = useContainerStore()
 
 let objects = ref()
 
@@ -19,24 +19,25 @@ const home = ref({
   icon: 'pi pi-home'
 })
 
-const breadcrumbItems = ref([{ label: "Conteneurs" }])
+const breadcrumbItems = ref([{ label: t('labels.container', 2) }])
 
 const columns = [
-  { field: 'name', header: 'Nom' },
-  { field: 'barcode', header: 'Barcode' },
-  { field: 'material', header: 'Conteneur' },
+  { field: 'name', header: t('labels.name') },
+  { field: 'barcode', header: t('labels.barcode') },
+  { field: 'sku', header: t('labels.sku') },
 ]
 
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     name: { value: null, matchMode: FilterMatchMode.CONTAINS },
     barcode: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-    material: { value: null, matchMode: FilterMatchMode.IN },
+    sku: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
 });
 
 onMounted(async () => {
+  objectStore.setLoading(true)
   try {
-    objects.value = await containerStore.getAll({ itemsPerPage: -1, sortBy: ['products.name'] })
+    objects.value = await objectStore.getAll({ itemsPerPage: -1, sortBy: ['containers.name'] })
   } catch (error) {
     console.log(getApiErrors(error as AxiosError))
     toast.add({
@@ -45,6 +46,8 @@ onMounted(async () => {
       detail: error,
       life: 3000
     })
+  } finally {
+    objectStore.setLoading(false)
   }
 })
 </script>
@@ -57,10 +60,10 @@ onMounted(async () => {
       </div>
       <PrimeToolbar class="bg-transparent mt-1 border-none">
         <template #start>
-          <span class="font-medium text-xl md:text-4xl">{{ $t('labels.productList') }}</span>
+          <span class="font-medium text-xl md:text-4xl">{{ $t('labels.containerList') }}</span>
         </template>
         <template #end>
-          <PrimeButton @click="router.push({ name: 'products.create' })" :label="$t('labels.newProduct')"></PrimeButton>
+          <PrimeButton @click="() => {}" :label="$t('labels.newContainer')"></PrimeButton>
         </template>
       </PrimeToolbar>
     </nav>
@@ -69,10 +72,11 @@ onMounted(async () => {
         <PrimeDataTable
           v-model:filters="filters"
           :value="objects"
+          :loading="objectStore.loading"
           stripedRows
           sortMode="multiple"
           filterDisplay="row"
-          :globalFilterFields="['name', 'sku', 'barcode', 'categories', 'container']"
+          :globalFilterFields="['name', 'sku', 'barcode']"
           paginator
           removableSort
           :rows="10"
@@ -89,8 +93,8 @@ onMounted(async () => {
               </PrimeIconField>
             </div>
           </template>
-          <template #empty> Aucun matériel trouvé </template>
-          <template #loading> Chargement en cours... </template>
+          <template #empty v-if="!objectStore.loading">{{ $t('app.features.container.index.emptyMessage') }}</template>
+          <template #loading>{{ $t('labels.loadingMessage') }}</template>
           <PrimeColumn
             v-for="col of columns"
             :key="col.field"
@@ -98,6 +102,19 @@ onMounted(async () => {
             :header="col.header"
             sortable
           ></PrimeColumn>
+
+          <PrimeColumn 
+            key="actions"
+            field="actions"
+            :header="$t('labels.action')"
+          >
+            <template #body>
+              <div class="flex">
+                <PrimeButton class="mr-2" icon="pi pi-pencil" rounded outlined :aria-label="$t('labels.edit')" />
+                <PrimeButton icon="pi pi-trash" severity="danger" rounded outlined :aria-label="$t('labels.delete')" />
+              </div>
+            </template>
+          </PrimeColumn>
         </PrimeDataTable>
       </div>
     </div>

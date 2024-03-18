@@ -41,17 +41,19 @@ const routes: any = [
             component: () => import('@/app/features/product/presentation/CreateView.vue')
           }
         ]
+      },
+      {
+        path: 'containers',
+        children: [
+          {
+            path: '',
+            name: 'containers.index',
+            component: () => import('@/app/features/container/presentation/IndexView.vue')
+          },
+        ]
       }
     ]
   }
-  /* {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (About.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import('../views/AboutView.vue')
-  } */
 ]
 
 const router = createRouter({
