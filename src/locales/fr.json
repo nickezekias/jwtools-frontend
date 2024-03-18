@@ -14,9 +14,13 @@
         "create": {
           "organize": "Rangement et état",
           "productImage": "Image",
-          "productInformation": "Information du produit",
+          "productInformation": "Information du matériel",
           "quantityAndCost": "Quantité et coût",
           "successMessage": "Le matériel à été ajouté avec succès"
+        },
+        "index": {
+          "emptyMessage": "Aucun matériel trouvé",
+          "loadingMessage": "Chargement en cours..."
         }
       },
       "register": {
@@ -29,7 +33,7 @@
     "brand": "Marque",
     "category": "Catégorie | Catégories",
     "color": "Couleur",
-    "container": "Conteneur",
+    "container": "Conteneur | Conteneurs",
     "cost": "Coût",
     "description": "Description",
     "email": "Email",
@@ -38,7 +42,7 @@
     "lastName": "Nom",
     "login": "Me Connecter",
     "name": "Name",
-    "newProduct": "Nouveau Produit",
+    "newProduct": "Nouveau Matériel",
     "password": "Mot de passe",
     "product": "Matériel | Matériaux",
     "productList": "Liste du matériel",
@@ -53,11 +57,11 @@
     "appLayout": {
       "containersList": "Liste de conteneurs",
       "dashboard": "Tableau de bord",
-      "editProduct": "Modifier Produit",
+      "editProduct": "Modifier Matériel",
       "inventory": "Inventaire",
       "newContainer": "Nouveau conteneur",
-      "newProduct": "Nouveau Produit",
-      "productsList": "Liste des produits"
+      "newProduct": "Nouveau Matériel",
+      "productsList": "Liste des matériels"
     }
   },
   "placeholders": {

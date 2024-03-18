@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { reactive, ref, onMounted } from 'vue'
-import { useProductStore } from '@/stores/product'
+import { ref, onMounted } from 'vue'
+import { useProductStore } from '@/stores/product';
 import { useI18n } from 'vue-i18n'
 import { FilterMatchMode } from 'primevue/api';
 import { useToast } from 'primevue/usetoast'
@@ -39,6 +39,7 @@ const filters = ref({
 });
 
 onMounted(async () => {
+  productStore.setLoading(true)
   try {
     objects.value = await productStore.getAll({ itemsPerPage: -1, sortBy: ['products.name'] })
   } catch (error) {
@@ -49,6 +50,8 @@ onMounted(async () => {
       detail: error,
       life: 3000
     })
+  } finally {
+    productStore.setLoading(false)
   }
 })
 </script>
@@ -56,7 +59,7 @@ onMounted(async () => {
 <template>
   <div class="pb-6 md:pb-3">
     <nav>
-      <div class="card flex justify-content-center">
+      <div class="flex justify-content-center">
         <PrimeBreadcrumb :home="home" :model="breadcrumbItems" class="w-full bg-transparent" />
       </div>
       <PrimeToolbar class="bg-transparent mt-1 border-none">
@@ -73,6 +76,7 @@ onMounted(async () => {
         <PrimeDataTable
           v-model:filters="filters"
           :value="objects"
+          :loading="productStore.loading"
           stripedRows
           sortMode="multiple"
           filterDisplay="row"
@@ -93,8 +97,8 @@ onMounted(async () => {
               </PrimeIconField>
             </div>
           </template>
-          <template #empty> Aucun matériel trouvé </template>
-          <template #loading> Chargement en cours... </template>
+          <template #empty v-if="!productStore.loading">{{ $t("app.features.product.index.emptyMessage") }}</template>
+          <template #loading>{{ $t("app.features.product.index.loadingMessage") }}</template>
           <PrimeColumn
             v-for="col of columns"
             :key="col.field"

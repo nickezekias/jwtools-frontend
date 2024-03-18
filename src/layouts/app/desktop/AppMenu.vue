@@ -27,11 +27,21 @@ const model = ref([
             icon: 'pi pi-fw pi-plus',
             to: '/products/create'
           },
+        ]
+      },
+      {
+        label: t('labels.container', 2),
+        icon: 'pi pi-fw pi-box',
+        items: [
           {
-            label: 'Access Denied',
-            icon: 'pi pi-fw pi-lock',
-            to: '/auth/access'
-          }
+            label: 'Liste',
+            icon: 'pi pi-fw pi-th-large',
+            to: '/containers'
+          },
+          {
+            label: 'New',
+            icon: 'pi pi-fw pi-plus',
+          },
         ]
       },
     ]
