@@ -1,6 +1,6 @@
 {
   "actions": {
-    "cancel":"Annuler",
+    "cancel": "Annuler",
     "login": "Me Connecter",
     "register": "M'inscrire",
     "save": "Enregistrer"
@@ -8,8 +8,16 @@
   "app": {
     "features": {
       "container": {
+        "confirmDeleteMessage": "Voulez vous vraiment supprimer ce conteneur, cette action est irreversible!",
+        "create": {
+          "containerImage": "Image du conteneur",
+          "editSuccessMessage": "Le conteneur à été modifié avec succès",
+          "successMessage": "Le conteneur à été ajouté avec succès"
+        },
+        "deleteContainer": "Supprimer Conteneur",
+        "deleteSuccessMessage": "Conteneur supprimé avec succès",
         "index": {
-          "emptyMessage":"Aucun conteneur trouvé"
+          "emptyMessage": "Aucun conteneur trouvé"
         }
       },
       "login": {
@@ -45,19 +53,23 @@
     "description": "Description",
     "delete": "Supprimer",
     "edit": "Modifier",
+    "editContainer": "Modifier Conteneur",
     "email": "Email",
     "error": "Erreur",
     "firstName": "Prénom",
     "lastName": "Nom",
+    "list": "Liste",
     "loadingMessage": "Chargement en cours...",
     "login": "Me Connecter",
     "name": "Name",
+    "new": "Nouveau",
     "newContainer": "Nouveau conteneur",
     "newProduct": "Nouveau Matériel",
     "password": "Mot de passe",
     "product": "Matériel | Matériaux",
     "productList": "Liste du matériel",
     "quantity": "Quantité",
+    "search": "Rechercher",
     "sku": "SKU",
     "state": "État",
     "status": "Statut",

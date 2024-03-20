@@ -31,6 +31,7 @@ import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
 import InputNumber from 'primevue/inputnumber';
 import InputText from 'primevue/inputtext';
+import Message from 'primevue/message';
 import PanelMenu from 'primevue/panelmenu';
 import Password from 'primevue/password';
 import ProgressBar from 'primevue/progressbar';
@@ -78,6 +79,7 @@ app.component('PrimeIconField', IconField)
 app.component('PrimeInputIcon', InputIcon)
 app.component('PrimeInputNumber', InputNumber)
 app.component('PrimeInputText', InputText)
+app.component('PrimeMessage', Message)
 app.component('PrimePanelMenu', PanelMenu)
 app.component('PrimePassword', Password)
 app.component('PrimeProgressBar', ProgressBar)

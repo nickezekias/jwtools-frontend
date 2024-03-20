@@ -11,7 +11,7 @@ import { getApiErrors } from '@/app/utils/helper'
 import { AxiosError } from 'axios'
 
 const router = useRouter()
-const productStore = useProductStore()
+const objectStore = useProductStore()
 const { t } = useI18n()
 const toast = useToast()
 
@@ -82,9 +82,9 @@ const form = computed(() => {
 })
 
 async function submit() {
-  productStore.setLoading(true)
+  objectStore.setLoading(true)
   try {
-    const response = await productStore.create(form.value)
+    const response = await objectStore.create(form.value)
     if (response) {
       toast.add({
         severity: 'success',
@@ -105,7 +105,7 @@ async function submit() {
       life: 3000
     })
   } finally {
-    productStore.setLoading(false)
+    objectStore.setLoading(false)
   }
 }
 </script>
@@ -300,7 +300,7 @@ async function submit() {
           @click="submit"
           size="large"
           :label="$t('actions.save')"
-          :loading="productStore.loading"
+          :loading="objectStore.loading"
         />
       </div>
     </div>

@@ -18,12 +18,12 @@ const model = ref([
         icon: 'pi pi-fw pi-briefcase',
         items: [
           {
-            label: 'Liste',
+            label: t('labels.list'),
             icon: 'pi pi-fw pi-th-large',
             to: '/products'
           },
           {
-            label: 'New',
+            label: t('labels.new'),
             icon: 'pi pi-fw pi-plus',
             to: '/products/create'
           },
@@ -34,12 +34,12 @@ const model = ref([
         icon: 'pi pi-fw pi-box',
         items: [
           {
-            label: 'Liste',
+            label: t('labels.list'),
             icon: 'pi pi-fw pi-th-large',
             to: '/containers'
           },
           {
-            label: 'New',
+            label: t('labels.new'),
             icon: 'pi pi-fw pi-plus',
           },
         ]

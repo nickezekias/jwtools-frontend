@@ -1,19 +1,19 @@
-import type { DBGetQueryFilter } from '@/@types/model'
+import type { Container, DBGetQueryFilter } from '@/@types/model'
 import axios from '@/lib/axios'
 
 const url = '/containers'
 
-const createObject = function (data: Record<string, unknown>) {
+const createObject = function (data: Container) {
   return axios.post(url, data)
 }
 
 const updateObject = function (
-  payload: Record<string, unknown> & {
+  payload: Record<string, number | Container> & {
     id: number
-    data: Record<string, unknown>
+    data: Container
   }
 ) {
-  return axios.post(`${url}/${payload.id}`, payload.data)
+  return axios.put(`${url}/${payload.id}`, payload.data)
 }
 
 const deleteObject = function (id: number) {
