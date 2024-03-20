@@ -41,9 +41,9 @@ const form = computed((): Container => {
 
 const getHeader = computed(() => {
   if (isEditMode.value) {
-    return t('labels.newContainer')
-  } else {
     return t('labels.editContainer')
+  } else {
+    return t('labels.newContainer')
   }
 })
 
@@ -53,7 +53,6 @@ const isEditMode = computed(() => {
 })
 
 onMounted(async () => {
-  console.log("proppps data", props.data)
   if (props.data) {
     fillForm(props.data)
   }
@@ -110,7 +109,7 @@ async function submit() {
     console.log(getApiErrors(error as AxiosError))
     toast.add({
       severity: 'error',
-      summary: t("labels.error"),
+      summary: t('labels.error'),
       detail: error,
       life: 3000
     })
@@ -122,77 +121,86 @@ async function submit() {
 
 <template>
   <PrimeDialog
-    v-model:visible="model"
     :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
-    @hide="closeDialog"
+    :closable="false"
     modal
     :style="{ width: '50vw' }"
+    v-model:visible="model"
   >
-    <template #header>
-      <span class="text-xl md:text-3xl font-bold">{{ getHeader }}</span>
+    <template #container>
+      <div class="p-4">
+        <div>
+          <span class="text-xl md:text-3xl font-bold">{{ getHeader }}</span>
+        </div>
+        <form class="w-full m-0 mt-5">
+          <div class="field text-base md:text-lg">
+            <label for="name">{{ $t('labels.name') }}</label>
+            <input
+              v-model="name"
+              id="name"
+              type="text"
+              class="text-color text-sm md:text-lg surface-overlay p-3 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+            />
+          </div>
+
+          <div class="grid">
+            <div class="col field">
+              <label for="barcode">{{ $t('labels.barcode') }}</label>
+              <input
+                v-model="barcode"
+                id="barcode"
+                type="text"
+                class="text-color text-sm md:text-lg surface-overlay p-3 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+              />
+            </div>
+            <div class="field col">
+              <label for="sku">{{ $t('labels.sku') }}</label>
+              <input
+                v-model="sku"
+                id="sku"
+                type="text"
+                class="text-color text-sm md:text-lg surface-overlay p-3 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+              />
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="col field text-base md:text-lg">
+              <label for="name">{{ $t('labels.state') }}</label>
+              <PrimeDropdown
+                v-model="state"
+                :options="states"
+                :placeholder="$t('placeholders.selectState')"
+                class="w-full py-1"
+              />
+            </div>
+          </div>
+
+          <div>
+            <span class="text-2xl font-semibold">{{
+              $t('app.features.container.create.containerImage')
+            }}</span>
+            <FileUploader />
+          </div>
+
+          <div class="col-12 mt-5">
+            <div class="flex justify-content-end gap-4">
+              <PrimeButton
+                @click="closeDialog"
+                size="large"
+                severity="secondary"
+                :label="$t('actions.cancel')"
+              />
+              <PrimeButton
+                @click="submit"
+                size="large"
+                :label="$t('actions.save')"
+                :loading="objectStore.loading"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
     </template>
-    <form class="w-full m-0 px-2">
-      <div class="field text-base md:text-lg">
-        <label for="name">{{ $t('labels.name') }}</label>
-        <input
-          v-model="name"
-          id="name"
-          type="text"
-          class="text-color text-sm md:text-lg surface-overlay p-3 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-        />
-      </div>
-
-      <div class="grid">
-        <div class="col field">
-          <label for="barcode">{{ $t('labels.barcode') }}</label>
-          <input
-            v-model="barcode"
-            id="barcode"
-            type="text"
-            class="text-color text-sm md:text-lg surface-overlay p-3 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-          />
-        </div>
-        <div class="field col">
-          <label for="sku">{{ $t('labels.sku') }}</label>
-          <input
-            v-model="sku"
-            id="sku"
-            type="text"
-            class="text-color text-sm md:text-lg surface-overlay p-3 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-          />
-        </div>
-      </div>
-
-      <div class="grid">
-        <div class="col field text-base md:text-lg">
-          <label for="name">{{ $t('labels.state') }}</label>
-          <PrimeDropdown
-            v-model="state"
-            :options="states"
-            :placeholder="$t('placeholders.selectState')"
-            class="w-full py-1"
-          />
-        </div>
-      </div>
-
-      <div>
-        <span class="text-2xl font-semibold">{{
-            $t('app.features.container.create.containerImage')
-          }}</span>
-          <FileUploader />
-      </div>
-
-      <div class="col-12 mt-5">
-        <div class="flex justify-content-end gap-4">
-          <PrimeButton @click="closeDialog" size="large" severity="secondary" :label="$t('actions.cancel')" />
-          <PrimeButton
-            @click="submit"
-            size="large"
-            :label="$t('actions.save')"
-            :loading="objectStore.loading"
-          />
-        </div>
-      </div>
-    </form>
   </PrimeDialog>
 </template>
