@@ -13,7 +13,7 @@ const updateObject = function (
     data: Record<string, unknown>
   }
 ) {
-  return axios.post(`${url}/${payload.id}`, payload.data)
+  return axios.put(`${url}/${payload.id}`, payload.data)
 }
 
 const deleteObject = function (id: number) {

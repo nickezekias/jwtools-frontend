@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, type Ref } from 'vue'
 import { useProductStore } from '@/stores/product';
 import { useI18n } from 'vue-i18n'
 import { FilterMatchMode } from 'primevue/api';
@@ -8,8 +8,14 @@ import { useToast } from 'primevue/usetoast'
 import { getApiErrors } from '@/app/utils/helper'
 import { AxiosError } from 'axios'
 import { useRouter } from 'vue-router';
+import { useDataTableUtil } from '@/app/composables/useDataTableUtil'
 
-const productStore = useProductStore()
+import DeleteDialog from './DeleteView.vue'
+import EditDialog from './EditView.vue'
+import type { Product } from '@/@types/model';
+
+
+const objectStore = useProductStore()
 const { t } = useI18n()
 const toast = useToast()
 const router = useRouter()
@@ -30,6 +36,8 @@ const columns = [
   { field: 'quantity', header: 'Quantity' }
 ]
 
+const dialogMode = ref(objectStore.MODE_CREATE)
+
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     name: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -38,10 +46,18 @@ const filters = ref({
     categories: { value: null, matchMode: FilterMatchMode.IN },
 });
 
+const { updateObjectsList } = useDataTableUtil()
+
+const isEditDialog = ref(false)
+const editData: Ref<Product | null> = ref(null)
+
+const isDeleteDialog = ref(false)
+const deleteId = ref(0)
+
 onMounted(async () => {
-  productStore.setLoading(true)
+  objectStore.setLoading(true)
   try {
-    objects.value = await productStore.getAll({ itemsPerPage: -1, sortBy: ['products.name'] })
+    objects.value = await objectStore.getAll({ itemsPerPage: -1, sortBy: ['products.name'] })
   } catch (error) {
     console.log(getApiErrors(error as AxiosError))
     toast.add({
@@ -51,9 +67,28 @@ onMounted(async () => {
       life: 3000
     })
   } finally {
-    productStore.setLoading(false)
+    objectStore.setLoading(false)
   }
 })
+
+function closeEditDialog() {
+  isEditDialog.value = false
+}
+
+function onDeleted() {
+  updateObjectsList({ deleteId, objects })
+}
+
+function showDeleteDialog(id: number) {
+  isDeleteDialog.value = true
+  deleteId.value = id
+}
+
+function showEditDialog(data: Product) {
+  isEditDialog.value = true
+  editData.value = data
+  dialogMode.value = objectStore.MODE_EDIT
+}
 </script>
 
 <template>
@@ -76,7 +111,7 @@ onMounted(async () => {
         <PrimeDataTable
           v-model:filters="filters"
           :value="objects"
-          :loading="productStore.loading"
+          :loading="objectStore.loading"
           stripedRows
           sortMode="multiple"
           filterDisplay="row"
@@ -97,7 +132,7 @@ onMounted(async () => {
               </PrimeIconField>
             </div>
           </template>
-          <template #empty v-if="!productStore.loading">{{ $t("app.features.product.index.emptyMessage") }}</template>
+          <template #empty v-if="!objectStore.loading">{{ $t("app.features.product.index.emptyMessage") }}</template>
           <template #loading>{{ $t("app.features.product.index.loadingMessage") }}</template>
           <PrimeColumn
             v-for="col of columns"
@@ -106,8 +141,47 @@ onMounted(async () => {
             :header="col.header"
             sortable
           ></PrimeColumn>
+
+          <PrimeColumn key="actions" field="actions" :header="$t('labels.action')">
+            <template #body="{ data }">
+              <div class="flex">
+                <PrimeButton
+                  @click="showEditDialog(data)"
+                  class="mr-2"
+                  icon="pi pi-pencil"
+                  rounded
+                  outlined
+                  :aria-label="$t('labels.edit')"
+                />
+                <PrimeButton
+                  @click="showDeleteDialog(data.id)"
+                  icon="pi pi-trash"
+                  severity="danger"
+                  rounded
+                  outlined
+                  :aria-label="$t('labels.delete')"
+                />
+              </div>
+            </template>
+          </PrimeColumn>
         </PrimeDataTable>
       </div>
     </div>
+
+    <DeleteDialog
+      v-if="isDeleteDialog"
+      v-model="isDeleteDialog"
+      @close="isDeleteDialog = false"
+      :id="deleteId"
+      @deleted="onDeleted"
+    />
+
+    <EditDialog
+      @close="closeEditDialog"
+      :data="editData"
+      :mode="dialogMode"
+      v-if="isEditDialog"
+      v-model="isEditDialog"
+    />
   </div>
 </template>

@@ -24,6 +24,7 @@
         "login": "Me Connecter"
       },
       "product": {
+        "confirmDeleteMessage": "Voulez vous vraiment supprimer ce matériel, cette action est irreversible!?",
         "create": {
           "organize": "Rangement et état",
           "productImage": "Image",
@@ -31,6 +32,8 @@
           "quantityAndCost": "Quantité et coût",
           "successMessage": "Le matériel à été ajouté avec succès"
         },
+        "deleteProduct": "Supprimer Matériel",
+        "deleteSuccessMessage": "Matériel supprimé avec succès",
         "index": {
           "emptyMessage": "Aucun matériel trouvé",
           "loadingMessage": "Chargement en cours..."
@@ -54,8 +57,10 @@
     "delete": "Supprimer",
     "edit": "Modifier",
     "editContainer": "Modifier Conteneur",
+    "editDataLoadError": "Erreur lors du chargement des données, veuillez actualiser votre page",
+    "editProduct": "Modifier Matériel",
     "email": "Email",
-    "error": "Erreur",
+    "error": "Erreur | Erreurs",
     "firstName": "Prénom",
     "lastName": "Nom",
     "list": "Liste",
@@ -68,6 +73,7 @@
     "password": "Mot de passe",
     "product": "Matériel | Matériaux",
     "productList": "Liste du matériel",
+    "productType": "Type de matériel",
     "quantity": "Quantité",
     "search": "Rechercher",
     "sku": "SKU",
@@ -91,6 +97,7 @@
     "fileUploader": "Tirer et déposer vos fichiers ici pour les uploader",
     "selectCategory": "Sélectionner une catégorie",
     "selectContainer": "Sélectionner un conteneur",
+    "selectProductType": "Sélectionner un type de matériel",
     "selectState": "Sélectionner un état",
     "selectStatus": "Sélectionner un statut"
   }

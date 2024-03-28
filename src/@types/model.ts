@@ -25,4 +25,35 @@ interface DBGetQueryFilter {
   page?: number
 }
 
-export type { Container, DBGetQueryFilter }
+interface Product {
+  id: number
+  attributes: Array<string>
+  barcode: string
+  brand?: string
+  categories?: string
+  color?: string
+  container?: string
+  cost: number
+  description?: string
+  dimensions?: string
+  images: string
+  locale: string
+  material?: string
+  name: string
+  parent: number
+  price: number
+  qrCode?: string
+  quantity: number
+  serial?: string
+  sku: string
+  state: string
+  status: string
+  tags: Array<string>
+  type: string
+  unitOfMeasure?: string
+  warehouse?: string
+  createdAt?: string
+  updatedAt?: string
+}
+
+export type { Container, DBGetQueryFilter, Product }

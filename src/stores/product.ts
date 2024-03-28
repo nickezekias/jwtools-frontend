@@ -5,6 +5,9 @@ import objectService from '@/app/features/product/adapter/productService'
 
 export const useProductStore = defineStore('product', () => {
   const loading = ref(false)
+  const MODE_CREATE = 1
+  const MODE_EDIT = 2
+  const MODE_READ = 4
   const objects = ref([])
 
   async function getAll(filter: DBGetQueryFilter) {
@@ -48,5 +51,17 @@ export const useProductStore = defineStore('product', () => {
     loading.value = value
   }
 
-  return { loading, objects, create, destroy, get, getAll, setLoading, update }
+  return {
+    loading,
+    MODE_CREATE,
+    MODE_EDIT,
+    MODE_READ,
+    objects,
+    create,
+    destroy,
+    get,
+    getAll,
+    setLoading,
+    update
+  }
 })

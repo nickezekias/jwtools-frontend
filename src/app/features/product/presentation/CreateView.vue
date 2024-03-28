@@ -15,7 +15,7 @@ const items = ref([{ label: t('labels.product', 2) }, { label: t('labels.newProd
 <template>
   <div class="pb-6 md:pb-3">
     <nav>
-      <div class="card flex justify-content-center">
+      <div class="flex justify-content-center">
         <PrimeBreadcrumb :home="home" :model="items" class="w-full bg-transparent" />
       </div>
       <PrimeToolbar class="bg-transparent mt-1 border-none">
