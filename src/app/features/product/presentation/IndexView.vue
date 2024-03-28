@@ -20,7 +20,7 @@ const { t } = useI18n()
 const toast = useToast()
 const router = useRouter()
 
-let objects = ref()
+let objects: Ref<Array<Product>> = ref([])
 
 const home = ref({
   icon: 'pi pi-home'
@@ -77,6 +77,11 @@ function closeEditDialog() {
 
 function onDeleted() {
   updateObjectsList({ deleteId, objects })
+}
+
+function onEdited(editedData: Product) {
+  updateObjectsList({ editData, newData: editedData, objects})
+  editData.value = null
 }
 
 function showDeleteDialog(id: number) {
@@ -179,6 +184,7 @@ function showEditDialog(data: Product) {
     <EditDialog
       @close="closeEditDialog"
       :data="editData"
+      @edited="(editedData: Product) => { onEdited(editedData) }"
       :mode="dialogMode"
       v-if="isEditDialog"
       v-model="isEditDialog"

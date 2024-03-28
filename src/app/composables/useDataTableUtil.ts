@@ -1,8 +1,8 @@
 import { type Ref } from 'vue'
 
 interface Payload {
-  deleteId: Ref<number>
-  editData?: Ref<Record<string, unknown>>
+  deleteId?: Ref<number>
+  editData?: Ref<any | null>
   newData?: any
   objects: Ref<Array<any>>
 }
@@ -13,17 +13,17 @@ export function useDataTableUtil() {
     if (payload.editData && payload.newData) {
       for (let i = 0; i < payload.objects.value.length; i++) {
         if (payload.editData.value.id == payload.objects.value[i].id) {
-          payload.objects.value.splice(i, 1, payload)
+          payload.objects.value.splice(i, 1, payload.newData)
         }
       }
     }
     // add new item to list
     else if (!payload.editData && payload) {
-      payload.objects.value.unshift(payload)
+      payload.objects.value.unshift(payload.newData)
     }
 
     // Remove deleted item from list
-    if (payload.deleteId.value > 0 && !payload.editData) {
+    if (payload.deleteId && payload.deleteId.value > 0 && !payload.editData) {
       for (let i = 0; i < payload.objects.value.length; i++) {
         if (payload.deleteId.value == payload.objects.value[i].id) {
           payload.objects.value.splice(i, 1)

@@ -34,6 +34,7 @@
         },
         "deleteProduct": "Supprimer Matériel",
         "deleteSuccessMessage": "Matériel supprimé avec succès",
+        "editSuccessMessage": "Le matériel à été modifié avec succès",
         "index": {
           "emptyMessage": "Aucun matériel trouvé",
           "loadingMessage": "Chargement en cours..."

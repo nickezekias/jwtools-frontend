@@ -15,7 +15,7 @@ import { useProductStore } from '@/stores/product'
 import { useToast } from 'primevue/usetoast'
 
 const containerStore = useContainerStore()
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'edited'])
 const model = defineModel()
 const objectStore = useProductStore()
 const props = defineProps<{ data: Product | null; mode: number }>()
@@ -29,6 +29,7 @@ const brand = ref()
 const categories = ref()
 const color = ref()
 const colorPicker = ref('')
+const componentLoading = ref(false)
 const container = ref()
 const cost = ref()
 const description = ref()
@@ -48,16 +49,12 @@ const unitOfMeasure = ref()
 const warehouse = ref()
 
 const form = computed(() => {
-  let colorNameAndHexCode = color.value
-  if (colorNameAndHexCode) {
-    colorNameAndHexCode = `${color.value}#${colorPicker.value}`
-  }
   return {
     productAttributes: productAttributes.value.toString(),
     barcode: barcode.value,
     brand: brand.value,
     categories: categories.value,
-    color: colorNameAndHexCode,
+    color: color.value,
     container: container.value,
     cost: cost.value,
     description: description.value,
@@ -80,7 +77,7 @@ const form = computed(() => {
 })
 
 onMounted(async () => {
-  objectStore.setLoading(true)
+  componentLoading.value = true
   containers.value = await containerStore.getAll({ itemsPerPage: -1, sortBy: ['containers.name'] })
   if (props.mode == objectStore.MODE_EDIT && props.data) {
     if (props.data) {
@@ -95,14 +92,45 @@ onMounted(async () => {
       console.error('DATA PROP not passed properly')
     }
   }
-  objectStore.setLoading(false)
+  componentLoading.value = false
 })
+
+function clearForm() {
+  productAttributes.value = []
+  barcode.value = ''
+  brand.value = ''
+  categories.value = ''
+  color.value = ''
+  container.value = ''
+  cost.value = ''
+  description.value = ''
+  images.value = []
+  locale.value = ''
+  name.value = ''
+  price.value = ''
+  quantity.value = -1
+  qrCode.value = ''
+  serial.value = ''
+  sku.value = ''
+  state.value = ''
+  status.value = ''
+  tags.value = []
+  type.value = ''
+  unitOfMeasure.value = ''
+  warehouse.value = ''
+}
+
+function closeDialog() {
+  emit('close')
+  clearForm()
+}
 
 function fillForm(data: Product) {
   productAttributes.value = data.attributes
   barcode.value = data.barcode
   brand.value = data.brand
   categories.value = data.categories
+  color.value = data.color
   container.value = data.container
   cost.value = data.cost
   description.value = data.description
@@ -131,21 +159,21 @@ async function submit() {
         toast.add({
           severity: 'success',
           summary: 'Info',
-          detail: t('app.features.product.create.successMessage'),
+          detail: t('app.features.product.editSuccessMessage'),
           life: 3000
         })
+        closeDialog()
+        emit('edited', response)
       }
     } else {
       console.error('Props data not passed')
     }
   } catch (error) {
-    console.error(error)
-    console.log(getApiErrors(error as AxiosError))
     toast.add({
       severity: 'error',
       summary: t('labels.error'),
-      detail: error,
-      life: 3000
+      detail: getApiErrors(error as AxiosError),
+      life: 5000
     })
   } finally {
     objectStore.setLoading(false)
@@ -161,7 +189,7 @@ async function submit() {
     v-model:visible="model"
   >
     <template #container>
-      <div v-if="objectStore.loading" class="h-full w-full">
+      <div v-if="componentLoading" class="h-full w-full">
         <PrimeProgressBar mode="indeterminate" style="height: 4px"></PrimeProgressBar>
       </div>
       <div v-else class="content w-full md:w-9 pt-4">
