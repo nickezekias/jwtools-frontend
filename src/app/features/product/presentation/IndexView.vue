@@ -137,7 +137,7 @@ function showEditDialog(data: Product) {
               </PrimeIconField>
             </div>
           </template>
-          <template #empty v-if="!objectStore.loading">{{ $t("app.features.product.index.emptyMessage") }}</template>
+          <template #empty><span v-if="!objectStore.loading">{{ $t("app.features.product.index.emptyMessage") }}</span></template>
           <template #loading>{{ $t("app.features.product.index.loadingMessage") }}</template>
           <PrimeColumn
             v-for="col of columns"

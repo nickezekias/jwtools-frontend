@@ -18,15 +18,15 @@ export function useDataTableUtil() {
       }
     }
     // add new item to list
-    else if (!payload.editData && payload) {
+    else if (!payload.editData && payload.newData) {
       payload.objects.value.unshift(payload.newData)
     }
 
     // Remove deleted item from list
     if (payload.deleteId && payload.deleteId.value > 0 && !payload.editData) {
-      for (let i = 0; i < payload.objects.value.length; i++) {
-        if (payload.deleteId.value == payload.objects.value[i].id) {
-          payload.objects.value.splice(i, 1)
+      for (let j = 0; j < payload.objects.value.length; j++) {
+        if (payload.deleteId.value == payload.objects.value[j].id) {
+          payload.objects.value.splice(j, 1)
         }
       }
     }
