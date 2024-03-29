@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, type Ref } from 'vue'
+import { ref, onMounted, watch, type Ref } from 'vue'
 import { useProductStore } from '@/stores/product';
 import { useI18n } from 'vue-i18n'
 import { FilterMatchMode } from 'primevue/api';
@@ -7,7 +7,7 @@ import { useToast } from 'primevue/usetoast'
 
 import { getApiErrors } from '@/app/utils/helper'
 import { AxiosError } from 'axios'
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useDataTableUtil } from '@/app/composables/useDataTableUtil'
 
 import DeleteDialog from './DeleteView.vue'
@@ -18,6 +18,7 @@ import type { Product } from '@/@types/model';
 const objectStore = useProductStore()
 const { t } = useI18n()
 const toast = useToast()
+const route = useRoute()
 const router = useRouter()
 
 let objects: Ref<Array<Product>> = ref([])
@@ -69,6 +70,12 @@ onMounted(async () => {
   } finally {
     objectStore.setLoading(false)
   }
+  showEditDialogOnRouteChange(route.query.editId as string)
+  console.log("Mounted")
+})
+
+watch(() => route.query.editId, () => {
+  showEditDialogOnRouteChange(route.query.editId as string)
 })
 
 function closeEditDialog() {
@@ -93,6 +100,15 @@ function showEditDialog(data: Product) {
   isEditDialog.value = true
   editData.value = data
   dialogMode.value = objectStore.MODE_EDIT
+}
+
+function showEditDialogOnRouteChange(editIdQuery: string) {
+  if (editIdQuery && Number(editIdQuery) > 0) {
+    const found = objects.value.find((val) => val.id == Number(editIdQuery))
+    if (found) {
+      showEditDialog(found)
+    }
+  }
 }
 </script>
 
