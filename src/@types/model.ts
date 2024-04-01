@@ -27,13 +27,13 @@ interface DBGetQueryFilter {
 
 interface Product {
   id: number
-  attributes: Array<string>
+  productAttributes: Array<string>
   barcode: string
   brand?: string
   categories?: string
   color?: string
   container?: string
-  cost: number
+  cost?: number
   description?: string
   dimensions?: string
   images: string
@@ -41,11 +41,12 @@ interface Product {
   material?: string
   name: string
   parent: number
-  price: number
+  price?: number
   qrCode?: string
   quantity: number
   serial?: string
   sku: string
+  slug: string
   state: string
   status: string
   tags: Array<string>

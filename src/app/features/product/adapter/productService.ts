@@ -1,16 +1,16 @@
-import type { DBGetQueryFilter } from '@/@types/model'
+import type { DBGetQueryFilter, Product as Obj } from '@/@types/model'
 import axios from '@/lib/axios'
 
 const url = '/products'
 
-const createObject = function (data: Record<string, unknown>) {
+const createObject = function (data: Obj) {
   return axios.post(url, data)
 }
 
 const updateObject = function (
   payload: Record<string, unknown> & {
     id: number
-    data: Record<string, unknown>
+    data: Obj
   }
 ) {
   return axios.put(`${url}/${payload.id}`, payload.data)

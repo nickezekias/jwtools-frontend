@@ -1,11 +1,11 @@
-import { ref } from 'vue'
+import { ref, type Ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { Container, DBGetQueryFilter } from '@/@types/model'
 import objectService from '@/app/features/container/adapter/containerService'
 
 export const useContainerStore = defineStore('container', () => {
   const loading = ref(false)
-  const objects = ref([])
+  const objects: Ref<Array<Container>> = ref([])
 
   async function getAll(filter: DBGetQueryFilter) {
     if (!filter) {
@@ -15,6 +15,7 @@ export const useContainerStore = defineStore('container', () => {
       }
     }
     const response = await objectService.getAll(filter)
+    objects.value = response.data.data
     return response.data.data
   }
 

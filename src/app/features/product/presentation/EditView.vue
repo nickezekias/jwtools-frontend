@@ -46,11 +46,13 @@ const status = ref()
 const tags: Ref<Array<string>> = ref([])
 const type = ref()
 const unitOfMeasure = ref()
+//FIXME: static warehouse
 const warehouse = ref()
 
-const form = computed(() => {
+const form = computed((): Product => {
   return {
-    productAttributes: productAttributes.value.toString(),
+    id: 0,
+    productAttributes: productAttributes.value,
     barcode: barcode.value,
     brand: brand.value,
     categories: categories.value,
@@ -61,6 +63,7 @@ const form = computed(() => {
     images: images.value.toString(),
     locale: locale.value,
     name: name.value,
+    parent: 0,
     price: price.value,
     quantity: quantity.value,
     qrCode: qrCode.value,
@@ -69,7 +72,7 @@ const form = computed(() => {
     slug: name.value.toLowerCase().replace(' ', '-'),
     state: state.value,
     status: status.value,
-    tags: tags.value.toString(),
+    tags: tags.value,
     type: type.value,
     unitOfMeasure: unitOfMeasure.value,
     warehouse: warehouse.value
@@ -78,7 +81,11 @@ const form = computed(() => {
 
 onMounted(async () => {
   componentLoading.value = true
-  containers.value = await containerStore.getAll({ itemsPerPage: -1, sortBy: ['containers.name'] })
+  if (containerStore.objects.length > 0) {
+    containers.value = containerStore.objects
+  } else {
+    containers.value = await containerStore.getAll({ itemsPerPage: -1, sortBy: ['containers.name'] })
+  }
   if (props.mode == objectStore.MODE_EDIT && props.data) {
     if (props.data) {
       fillForm(props.data)
@@ -126,7 +133,7 @@ function closeDialog() {
 }
 
 function fillForm(data: Product) {
-  productAttributes.value = data.attributes
+  productAttributes.value = data.productAttributes
   barcode.value = data.barcode
   brand.value = data.brand
   categories.value = data.categories

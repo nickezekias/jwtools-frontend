@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { DBGetQueryFilter } from '@/@types/model'
+import type { DBGetQueryFilter, Product as Obj } from '@/@types/model'
 import objectService from '@/app/features/product/adapter/productService'
 
 export const useProductStore = defineStore('product', () => {
@@ -26,7 +26,7 @@ export const useProductStore = defineStore('product', () => {
     return response.data.data
   }
 
-  async function create(data: Record<string, unknown>) {
+  async function create(data: Obj) {
     loading.value = true
     const response = await objectService.createObject(data)
     return response.data.data
@@ -35,7 +35,7 @@ export const useProductStore = defineStore('product', () => {
   async function update(
     payload: Record<string, unknown> & {
       id: number
-      data: Record<string, unknown>
+      data: Obj
     }
   ) {
     const response = await objectService.updateObject(payload)
