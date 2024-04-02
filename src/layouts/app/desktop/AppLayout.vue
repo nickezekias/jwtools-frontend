@@ -74,14 +74,15 @@ const isOutsideClicked = (event) => {
           class=" app-toolbar shadow-1"
           style="border-radius: 8px; padding: 1rem 1rem 1rem 1.5rem"
         >
-          <!-- <template #start>
-            <PrimeIconField iconPosition="left">
+          <template #start>
+            <span class="text-3xl text-primary font-bold">JWTools</span>
+            <!-- <PrimeIconField iconPosition="left">
               <PrimeInputIcon>
                 <i class="pi pi-search" />
               </PrimeInputIcon>
               <PrimeInputText class="py-2 border-none shadow-none" v-model="search" placeholder="Search" />
-            </PrimeIconField>
-          </template> -->
+            </PrimeIconField> -->
+          </template>
 
           <template #end>
             <div class="flex align-items-center gap-3">
