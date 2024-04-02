@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+const router = useRouter()
 
-const email = ref('')
-const password = ref('')
+const email = ref('admin@example.com')
+const password = ref('password')
 </script>
 
 <template>
