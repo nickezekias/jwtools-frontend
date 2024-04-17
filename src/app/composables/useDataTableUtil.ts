@@ -3,7 +3,7 @@ import { type Ref } from 'vue'
 interface Payload {
   deleteId?: Ref<number>
   editData?: Ref<any | null>
-  newData?: any
+  newData?: any | Array<any>
   objects: Ref<Array<any>>
 }
 
@@ -17,8 +17,16 @@ export function useDataTableUtil() {
         }
       }
     }
+
+    // add new array of items to list
+    else if (!payload.editData && payload.newData && Array.isArray(payload.newData)) {
+      for (let i = 0; i < payload.newData.length; i++) {
+        payload.objects.value.unshift(payload.newData[i])
+      }
+    }
+
     // add new item to list
-    else if (!payload.editData && payload.newData) {
+    else if (!payload.editData && payload.newData && !Array.isArray(payload.newData)) {
       payload.objects.value.unshift(payload.newData)
     }
 

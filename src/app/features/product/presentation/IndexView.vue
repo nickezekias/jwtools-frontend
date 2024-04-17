@@ -13,6 +13,7 @@ import XLSX from 'xlsx'
 
 import DeleteDialog from './DeleteView.vue'
 import EditDialog from './EditView.vue'
+import MassCreateDialog from './MassCreateView.vue'
 import type { Product } from '@/@types/model'
 
 const objectStore = useProductStore()
@@ -30,11 +31,11 @@ const home = ref({
 const breadcrumbItems = ref([{ label: t('labels.product', 2) }])
 
 const columns = [
-  { field: 'name', header: 'Nom' },
-  { field: 'sku', header: 'SKU' },
-  { field: 'barcode', header: 'Barcode' },
-  { field: 'container', header: 'Conteneur' },
-  { field: 'quantity', header: 'Quantity' }
+  { field: 'name', header: t('labels.name') },
+  { field: 'sku', header: t('labels.sku') },
+  { field: 'barcode', header: t('labels.barcode') },
+  { field: 'container', header: t('labels.container') },
+  // { field: 'quantity', header: t('labels.quantity') }
 ]
 
 const dialogMode = ref(objectStore.MODE_CREATE)
@@ -56,6 +57,17 @@ const isDeleteDialog = ref(false)
 const deleteId = ref(0)
 
 const isUploadDialog = ref(false)
+
+const isMassCreateDialog = ref(false)
+
+const createButtonItems = [
+  {
+    label: t('labels.massCreate'),
+    command: () => {
+      isMassCreateDialog.value = true
+    }
+  }
+]
 
 onMounted(async () => {
   objectStore.setLoading(true)
@@ -86,6 +98,24 @@ function closeEditDialog() {
   isEditDialog.value = false
 }
 
+function getStatusSeverity(status: string) {
+  if (status == 'Disponible') {
+    return 'info'
+  } else if (status == 'En Utilisation') {
+    return 'warning'
+  } else return null
+}
+
+function getStateSeverity(state: string) {
+  if (state == 'Nouveau' || state == 'Bon') {
+    return 'success'
+  } else if (state == 'Pièces manquantes') {
+    return 'warning'
+  } else if (state == 'Endommagé') {
+    return 'danger'
+  } else return null
+}
+
 function importCSV(files: File[]) {
   const fileReader = new FileReader()
   fileReader.onload = async (event) => {
@@ -97,20 +127,21 @@ function importCSV(files: File[]) {
     })
     const products = XLSX.utils.sheet_to_json(workbook.Sheets['IMPORT'])
     // console.log('JSON_IMPORTED_DATA', products[0])
-    products.forEach((val: any) => {
-      for (let v in val) {
-        v = `${v}`.replace(/\s/g, '')
+    /* products.forEach((val: any) => {
+      console.log("VAL", Object.values(val)[0])
+        val = `${Object.values(val)[0]}`.replace(/\s/g, '')
         const item: Record<string, unknown> = {}
-        let type = v.slice(v.indexOf('-')).substring(1, v.indexOf('-')-1)
+        let type = val.slice(val.indexOf('-')).substring(1, val.indexOf('-')-1)
         console.log("TYPE", type)
         if (type == 'C') type = 'Cable'
-        item.name = type + v.slice(v.indexOf('-')).substring(v.indexOf('-'))
+        item.name = type + val.slice(val.indexOf('-')).substring(val.indexOf('-'))
+        item.type = type
+        item.sku = val
         console.log("ITEM", item)
-      }
-    })
+    }) */
   }
 
-  fileReader.readAsBinaryString(files[0] as Blob);
+  fileReader.readAsBinaryString(files[0] as Blob)
 }
 
 function onDeleted() {
@@ -120,6 +151,10 @@ function onDeleted() {
 function onEdited(editedData: Product) {
   updateObjectsList({ editData, newData: editedData, objects })
   editData.value = null
+}
+
+function onMassCreated(newDataList: Array<Product>) {
+  updateObjectsList({ newData: newDataList, objects })
 }
 
 function showDeleteDialog(id: number) {
@@ -154,10 +189,11 @@ function showEditDialogOnRouteChange(editIdQuery: string) {
           <span class="font-medium text-xl md:text-4xl">{{ $t('labels.productList') }}</span>
         </template>
         <template #end>
-          <PrimeButton
-            @click="router.push({ name: 'products.create' })"
+          <PrimeSplitButton
             :label="$t('labels.newProduct')"
-          ></PrimeButton>
+            @click="router.push({ name: 'products.create' })"
+            :model="createButtonItems"
+          />
           <!-- <PrimeButton
             class="ml-3"
             icon="pi pi-download"
@@ -209,6 +245,17 @@ function showEditDialogOnRouteChange(editIdQuery: string) {
             }}</span></template
           >
           <template #loading>{{ $t('app.features.product.index.loadingMessage') }}</template>
+
+          <PrimeColumn :header="$t('labels.image')">
+            <template #body="slotProps">
+              <img
+                src="https://primefaces.org/cdn/primevue/images/product/bracelet.jpg"
+                :alt="slotProps.data.image"
+                class="w-4rem border-round"
+              />
+            </template>
+          </PrimeColumn>
+
           <PrimeColumn
             v-for="col of columns"
             :key="col.field"
@@ -216,6 +263,24 @@ function showEditDialogOnRouteChange(editIdQuery: string) {
             :header="col.header"
             sortable
           ></PrimeColumn>
+
+          <PrimeColumn :header="$t('labels.state')">
+            <template #body="slotProps">
+              <PrimeTag
+                :value="slotProps.data.state"
+                :severity="getStateSeverity(slotProps.data.state)"
+              />
+            </template>
+          </PrimeColumn>
+
+          <PrimeColumn :header="$t('labels.status')">
+            <template #body="slotProps">
+              <PrimeTag
+                :value="slotProps.data.status"
+                :severity="getStatusSeverity(slotProps.data.status)"
+              />
+            </template>
+          </PrimeColumn>
 
           <PrimeColumn key="actions" field="actions" :header="$t('labels.action')">
             <template #body="{ data }">
@@ -262,6 +327,16 @@ function showEditDialogOnRouteChange(editIdQuery: string) {
       :mode="dialogMode"
       v-if="isEditDialog"
       v-model="isEditDialog"
+    />
+
+    <MassCreateDialog
+      v-model="isMassCreateDialog"
+      @close="isMassCreateDialog = false"
+      @mass-created="
+        (newDataList: Product[]) => {
+          onMassCreated(newDataList)
+        }
+      "
     />
 
     <PrimeDialog v-model:visible="isUploadDialog" modal class="w-25rem p-0">

@@ -33,6 +33,7 @@ const componentLoading = ref(false)
 const container = ref()
 const cost = ref()
 const description = ref()
+const dimensions = ref()
 const images = ref()
 const locale = ref('fr-FR')
 const name = ref()
@@ -60,6 +61,7 @@ const form = computed((): Product => {
     container: container.value,
     cost: cost.value,
     description: description.value,
+    dimensions: dimensions.value,
     images: images.value.toString(),
     locale: locale.value,
     name: name.value,
@@ -111,6 +113,7 @@ function clearForm() {
   container.value = ''
   cost.value = ''
   description.value = ''
+  dimensions.value = ''
   images.value = []
   locale.value = ''
   name.value = ''
@@ -141,6 +144,7 @@ function fillForm(data: Product) {
   container.value = data.container
   cost.value = data.cost
   description.value = data.description
+  dimensions.value = data.dimensions
   images.value = data.images
   locale.value = data.locale
   name.value = data.name
@@ -210,18 +214,13 @@ async function submit() {
           <section class="grid">
             <!-- PRODUCT IMAGE -->
             <div class="col-12 md:col-5">
-              <!-- <div>
-                <span class="text-2xl font-semibold">{{
-                  $t('app.features.product.create.productImage')
-                }}</span>
-              </div> -->
               <FileUploader />
             </div>
 
             <!-- PRODUCT MAIN INFO -->
             <div class="col-12 md:col-7">
               <div class="field text-base md:text-lg">
-                <label for="name">{{ $t('labels.name') }}</label>
+                <label for="name">{{ $t('labels.name') }}</label><span class="required-field">*</span>
                 <input
                   v-model="name"
                   id="name"
@@ -232,7 +231,7 @@ async function submit() {
 
               <div class="formgrid grid">
                 <div class="field col-12 md:col">
-                  <label for="sku">{{ $t('labels.sku') }}</label>
+                  <label for="sku">{{ $t('labels.sku') }}</label><span class="required-field">*</span>
                   <input
                     v-model="sku"
                     id="sku"
@@ -241,7 +240,7 @@ async function submit() {
                   />
                 </div>
                 <div class="field col-12 md:col">
-                  <label for="barcode">{{ $t('labels.barcode') }}</label>
+                  <label for="barcode">{{ $t('labels.barcode') }}</label><span class="required-field">*</span>
                   <input
                     v-model="barcode"
                     id="barcode"
@@ -253,7 +252,7 @@ async function submit() {
 
               <div class="formgrid grid">
                 <div class="col-12 md:col-7 field text-base md:text-lg">
-                  <label for="name">{{ $t('labels.container') }}</label>
+                  <label for="name">{{ $t('labels.container') }}</label><span class="required-field">*</span>
                   <PrimeDropdown
                     v-model="container"
                     optionLabel="name"
@@ -265,7 +264,7 @@ async function submit() {
                 </div>
 
                 <div class="col-12 md:col-5 field text-base md:text-lg">
-                  <label for="type">{{ $t('labels.productType') }}</label>
+                  <label for="type">{{ $t('labels.productType') }}</label><span class="required-field">*</span>
                   <PrimeDropdown
                     v-model="type"
                     :options="productTypes"
@@ -284,7 +283,7 @@ async function submit() {
             </div>
 
             <div class="col-12 md:col-4 field text-base md:text-lg">
-              <label for="name">{{ $t('labels.category', 2) }}</label>
+              <label for="name">{{ $t('labels.category', 2) }}</label><span class="required-field">*</span>
               <PrimeDropdown
                 v-model="categories"
                 :options="categoriesList"
@@ -294,7 +293,7 @@ async function submit() {
             </div>
 
             <div class="col-12 md:col-4 field text-base md:text-lg">
-              <label for="name">{{ $t('labels.status') }}</label>
+              <label for="name">{{ $t('labels.status') }}</label><span class="required-field">*</span>
               <PrimeDropdown
                 v-model="status"
                 :options="statuses"
@@ -304,7 +303,7 @@ async function submit() {
             </div>
 
             <div class="col-12 md:col-4 field text-base md:text-lg">
-              <label for="name">{{ $t('labels.state') }}</label>
+              <label for="name">{{ $t('labels.state') }}</label><span class="required-field">*</span>
               <PrimeDropdown
                 v-model="state"
                 :options="states"
@@ -313,10 +312,22 @@ async function submit() {
               />
             </div>
 
-            <div class="col-12 md:col-4 field text-base md:text-lg">
+            <div class="col-12 field text-base md:text-lg">
               <label for="tags">{{ $t('labels.tag', 2) }}</label>
               <div class="p-fluid">
                 <PrimeChips v-model="tags" separator="," inputClass="py-1" />
+              </div>
+            </div>
+
+            <div class="col-12 md:col-4 field text-base md:text-lg">
+              <label for="dimensions">{{ `${$t('labels.dimension', 2)} (lxLxh)` }}</label>
+              <div class="flex align-items-center gap-3">
+                <input
+                  v-model="dimensions"
+                  id="dimensions"
+                  type="text"
+                  class="text-color text-sm md:text-lg surface-overlay p-3 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                />
               </div>
             </div>
 
@@ -343,7 +354,7 @@ async function submit() {
             </div>
 
             <div class="col-12 md:col-6 field text-base md:text-lg">
-              <label for="quantity" class="w-full">{{ $t('labels.quantity') }}</label>
+              <label for="quantity">{{ $t('labels.quantity') }}</label><span class="required-field">*</span>
               <div class="p-fluid">
                 <PrimeInputNumber
                   v-model="quantity"

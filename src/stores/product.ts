@@ -27,9 +27,13 @@ export const useProductStore = defineStore('product', () => {
   }
 
   async function create(data: Obj) {
-    loading.value = true
     const response = await objectService.createObject(data)
     return response.data.data
+  }
+
+  async function massCreate(data: Array<Obj>) {
+    const response = await objectService.massCreate(data)
+    return response.data
   }
 
   async function update(
@@ -61,6 +65,7 @@ export const useProductStore = defineStore('product', () => {
     destroy,
     get,
     getAll,
+    massCreate,
     setLoading,
     update
   }

@@ -8,3 +8,8 @@ $gutter: 1rem;
 .dbg-border-blue {
   border: 1px solid blue !important;
 }
+
+span.required-field {
+  color: red;
+  padding-left: 4px;
+}

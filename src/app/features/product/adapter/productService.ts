@@ -7,6 +7,10 @@ const createObject = function (data: Obj) {
   return axios.post(url, data)
 }
 
+const massCreate = function(data: Array<Obj>) {
+  return axios.post(`${url}/mass-create`, { "objects": data })
+}
+
 const updateObject = function (
   payload: Record<string, unknown> & {
     id: number
@@ -65,6 +69,7 @@ export default {
   getAll,
   getObjectsCount,
   createObject,
+  massCreate,
   updateObject,
   deleteObject
 }

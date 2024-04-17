@@ -14,12 +14,12 @@ export default defineConfig({
     }
   },
   server: {
-    proxy: {
+    /* proxy: {
       "/api": {
         target: "192.168.16.235:80",
         changeOrigin: true,
         secure: false
       }
-    }
+    } */
   }
 })

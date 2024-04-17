@@ -37,8 +37,9 @@ import Password from 'primevue/password';
 import ProgressBar from 'primevue/progressbar';
 import Ripple from 'primevue/ripple';
 import Sidebar from 'primevue/sidebar';
+import SplitButton from 'primevue/splitbutton';
 import StyleClass from 'primevue/styleclass';
-// import Textarea from 'primevue/textarea';
+import Tag from 'primevue/tag';
 import Toast from 'primevue/toast';
 import ToastService from 'primevue/toastservice'
 import Toolbar from 'primevue/toolbar';
@@ -84,7 +85,8 @@ app.component('PrimePanelMenu', PanelMenu)
 app.component('PrimePassword', Password)
 app.component('PrimeProgressBar', ProgressBar)
 app.component('PrimeSidebar', Sidebar)
-// app.component('PrimeTextarea', Textarea)
+app.component('PrimeSplitButton', SplitButton)
+app.component('PrimeTag', Tag)
 app.component('PrimeToast', Toast)
 app.component('PrimeToolbar', Toolbar)
 app.component('PrimeTreeSelect', TreeSelect)

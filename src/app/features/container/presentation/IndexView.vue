@@ -63,6 +63,16 @@ function clearEditData() {
   editData.value = null
 }
 
+function getStateSeverity(state: string) {
+  if (state == 'Nouveau' || state == 'Bon') {
+    return 'success'
+  } else if (state == 'Pièces manquantes') {
+    return 'warning'
+  } else if (state == 'Endommagé') {
+    return 'danger'
+  } else return null
+}
+
 function updateObjectsList(payload?: Container) {
   // update edited item data
   if (editData.value && payload) {
@@ -175,6 +185,15 @@ function toggleEditDialog(value: boolean) {
             :header="col.header"
             sortable
           ></PrimeColumn>
+
+          <PrimeColumn :header="$t('labels.state')">
+            <template #body="slotProps">
+              <PrimeTag
+                :value="slotProps.data.state"
+                :severity="getStateSeverity(slotProps.data.state)"
+              />
+            </template>
+          </PrimeColumn>
 
           <PrimeColumn key="actions" field="actions" :header="$t('labels.action')">
             <template #body="{ data }">
