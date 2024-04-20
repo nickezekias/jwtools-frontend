@@ -186,13 +186,21 @@ function toggleEditDialog(value: boolean) {
             sortable
           ></PrimeColumn>
 
-          <PrimeColumn :header="$t('labels.state')">
+          <PrimeColumn :header="$t('labels.state')" sortable>
             <template #body="slotProps">
               <PrimeTag
                 :value="slotProps.data.state"
                 :severity="getStateSeverity(slotProps.data.state)"
               />
             </template>
+          </PrimeColumn>
+
+          <PrimeColumn
+            key="productsCount"
+            field="productsCount"
+            :header="$t('labels.totalProducts')"
+            sortable
+          >
           </PrimeColumn>
 
           <PrimeColumn key="actions" field="actions" :header="$t('labels.action')">

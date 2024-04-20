@@ -87,7 +87,8 @@
     "state": "État",
     "status": "Statut",
     "tag": "Tag | Tags",
-    "tel": "Téléphone"
+    "tel": "Téléphone",
+    "totalProducts": "Total Matériaux"
   },
   "layouts": {
     "appLayout": {
