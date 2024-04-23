@@ -121,14 +121,14 @@ async function submit() {
 
 <template>
   <PrimeDialog
-    :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
+    class="w-11 md:w-30rem"
     :closable="false"
     modal
     :style="{ width: '50vw' }"
     v-model:visible="model"
   >
     <template #container>
-      <div class="p-4">
+      <div class="p-4 overflow-y-auto">
         <div>
           <span class="text-xl md:text-3xl font-bold">{{ getHeader }}</span>
         </div>
