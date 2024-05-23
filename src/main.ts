@@ -22,6 +22,8 @@ import Chips from 'primevue/chips';
 import ColorPicker from 'primevue/colorpicker';
 import Column from 'primevue/column';
 import DataTable from 'primevue/datatable'
+import DataView from 'primevue/dataview'
+import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions'
 import Dialog from 'primevue/dialog';
 import Dropdown from 'primevue/dropdown';
 import Editor from 'primevue/editor';
@@ -71,6 +73,8 @@ app.component('PrimeChips', Chips)
 app.component('PrimeColorPicker', ColorPicker)
 app.component('PrimeColumn', Column)
 app.component('PrimeDataTable', DataTable)
+app.component('PrimeDataView', DataView)
+app.component('PrimeDataViewLayoutOptions', DataViewLayoutOptions)
 app.component('PrimeDialog', Dialog)
 app.component('PrimeDropdown', Dropdown)
 app.component('PrimeEditor', Editor)
