@@ -1,4 +1,5 @@
 import { ref } from 'vue'
+import type { Ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { DBGetQueryFilter, Product as Obj } from '@/@types/model'
 import objectService from '@/app/features/product/adapter/productService'
@@ -8,7 +9,14 @@ export const useProductStore = defineStore('product', () => {
   const MODE_CREATE = 1
   const MODE_EDIT = 2
   const MODE_READ = 4
-  const objects = ref([])
+  const objects: Ref<Array<Obj>> = ref([])
+
+  function getProductsForContainer(sku: string) {
+    return objects.value.filter((val: Obj) => {
+      console.log(val.container, sku)
+      return val.container == sku
+    })
+  }
 
   async function getAll(filter: DBGetQueryFilter) {
     if (!filter) {
@@ -18,6 +26,7 @@ export const useProductStore = defineStore('product', () => {
       }
     }
     const response = await objectService.getAll(filter)
+    objects.value = response.data.data
     return response.data.data
   }
 
@@ -65,6 +74,7 @@ export const useProductStore = defineStore('product', () => {
     destroy,
     get,
     getAll,
+    getProductsForContainer,
     massCreate,
     setLoading,
     update

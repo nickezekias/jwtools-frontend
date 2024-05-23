@@ -9,7 +9,8 @@ import { useI18n } from 'vue-i18n'
 
 import CreateDialog from './CreateView.vue'
 import DeleteDialog from './DeleteView.vue'
-import type { Container } from '@/@types/model'
+import ShowView from './ShowView.vue'
+import type { Container, Product } from '@/@types/model'
 
 const { t } = useI18n()
 const toast = useToast()
@@ -41,6 +42,9 @@ const editData: Ref<Container | null> = ref(null)
 
 const isDeleteDialog = ref(false)
 const deleteId = ref(0)
+
+const isShowDialog = ref(false)
+let showDialogData: Ref<Product> = ref({} as Product)
 
 onMounted(async () => {
   objectStore.setLoading(true)
@@ -81,7 +85,7 @@ function updateObjectsList(payload?: Container) {
         objects.value.splice(i, 1, payload)
       }
     }
-  } 
+  }
   // add new item to list
   else if (!editData.value && payload) {
     objects.value.unshift(payload)
@@ -108,6 +112,11 @@ function showDeleteDialog(id: number) {
 function showEditDialog(payload: Container) {
   editData.value = payload
   toggleEditDialog(true)
+}
+
+function showShowDialog(payload: Record<string, unknown> & { data: Product }) {
+  showDialogData.value = payload.data
+  isShowDialog.value = true
 }
 
 function sortObjectsList() {
@@ -156,6 +165,11 @@ function toggleEditDialog(value: boolean) {
           :globalFilterFields="['name', 'sku', 'barcode']"
           paginator
           removableSort
+          @row-click="
+            (event: any) => {
+              showShowDialog(event)
+            }
+          "
           :rows="10"
           :rowsPerPageOptions="[5, 10, 20, 50]"
           tableStyle="min-width: 50rem"
@@ -178,6 +192,20 @@ function toggleEditDialog(value: boolean) {
             $t('app.features.container.index.emptyMessage')
           }}</template>
           <template #loading>{{ $t('labels.loadingMessage') }}</template>
+          <PrimeColumn :header="$t('labels.image')">
+            <template #body="slotProps">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="text-xl md:text-5xl text-gray-200 mx-auto"
+              >
+                <path
+                  d="M12.378 1.602a.75.75 0 0 0-.756 0L3 6.632l9 5.25 9-5.25-8.622-5.03ZM21.75 7.93l-9 5.25v9l8.628-5.032a.75.75 0 0 0 .372-.648V7.93ZM11.25 22.18v-9l-9-5.25v8.57a.75.75 0 0 0 .372.648l8.628 5.033Z"
+                />
+              </svg>
+            </template>
+          </PrimeColumn>
           <PrimeColumn
             v-for="col of columns"
             :key="col.field"
@@ -229,13 +257,16 @@ function toggleEditDialog(value: boolean) {
       </div>
     </div>
 
-
     <CreateDialog
       v-if="isEditDialog"
       v-model="isEditDialog"
       :data="editData"
       @close="toggleEditDialog(false)"
-      @submitted="(payload: Container) => { updateObjectsList(payload) }"
+      @submitted="
+        (payload: Container) => {
+          updateObjectsList(payload)
+        }
+      "
     />
 
     <DeleteDialog
@@ -244,6 +275,13 @@ function toggleEditDialog(value: boolean) {
       @close="isDeleteDialog = false"
       :id="deleteId"
       @submitted="updateObjectsList()"
+    />
+
+    <ShowView
+      v-if="isShowDialog"
+      v-model="isShowDialog"
+      :data="showDialogData"
+      @close="isShowDialog = false"
     />
   </div>
 </template>
