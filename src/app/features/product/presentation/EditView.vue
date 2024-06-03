@@ -12,6 +12,7 @@ import type { Product } from '@/@types/model'
 import { useContainerStore } from '@/stores/container'
 import { useI18n } from 'vue-i18n'
 import { useProductStore } from '@/stores/product'
+import { useRoute } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 
 const containerStore = useContainerStore()
@@ -19,6 +20,7 @@ const emit = defineEmits(['close', 'edited'])
 const model = defineModel()
 const objectStore = useProductStore()
 const props = defineProps<{ data: Product | null; mode: number }>()
+const route = useRoute()
 const { t } = useI18n()
 const toast = useToast()
 
@@ -79,6 +81,18 @@ const form = computed((): Product => {
     unitOfMeasure: unitOfMeasure.value,
     warehouse: warehouse.value
   }
+})
+
+const imageUrl = computed(() => {
+  const imgUrl = `${import.meta.env.VITE_API_BASE_URL}`;
+  return `${imgUrl}/${images.value}`
+})
+
+const isCancelButtonDisabled = computed(() => {
+  if (route.query.new && Number(route.query.new) == 1) {
+    return true
+  }
+  return false
 })
 
 onMounted(async () => {
@@ -214,7 +228,7 @@ async function submit() {
           <section class="grid">
             <!-- PRODUCT IMAGE -->
             <div class="col-12 md:col-5">
-              <FileUploader />
+              <FileUploader :extImageSrc="imageUrl"/>
             </div>
 
             <!-- PRODUCT MAIN INFO -->
@@ -396,6 +410,7 @@ async function submit() {
       <footer id="footer" class="gap-4">
         <PrimeButton
           @click="emit('close')"
+          :disabled="isCancelButtonDisabled"
           size="large"
           severity="secondary"
           :label="$t('actions.cancel')"
