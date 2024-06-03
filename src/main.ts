@@ -30,6 +30,7 @@ import Editor from 'primevue/editor';
 import FileUpload from 'primevue/fileupload';
 import FloatLabel from 'primevue/floatlabel';
 import IconField from 'primevue/iconfield';
+import Image from 'primevue/image';
 import InputIcon from 'primevue/inputicon';
 import InputNumber from 'primevue/inputnumber';
 import InputText from 'primevue/inputtext';
@@ -81,6 +82,7 @@ app.component('PrimeEditor', Editor)
 app.component('PrimeFileUpload', FileUpload)
 app.component('PrimeFloatLabel', FloatLabel)
 app.component('PrimeIconField', IconField)
+app.component('PrimeImage', Image)
 app.component('PrimeInputIcon', InputIcon)
 app.component('PrimeInputNumber', InputNumber)
 app.component('PrimeInputText', InputText)
