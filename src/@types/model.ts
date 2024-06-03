@@ -36,7 +36,7 @@ interface Product {
   cost?: number
   description?: string
   dimensions?: string
-  images: string
+  images: string | File
   locale: string
   material?: string
   name: string

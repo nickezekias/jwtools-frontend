@@ -31,6 +31,7 @@ const containers: Ref<Array<Container>> = ref([])
 const name = ref()
 const sku = ref()
 const type = ref()
+const images: Ref<string | File> = ref('')
 
 const form = computed((): Obj => {
   return {
@@ -38,7 +39,7 @@ const form = computed((): Obj => {
     productAttributes: [],
     barcode: barcode.value,
     container: container.value,
-    images: '',
+    images: images.value,
     locale: '',
     name: name.value,
     parent: 0,
@@ -51,6 +52,19 @@ const form = computed((): Obj => {
     type: type.value,
     warehouse: ''
   }
+})
+
+const formData = computed(() => {
+  const formData = new FormData()
+  for(let [key, value] of Object.entries(form.value)) {
+    if (key == 'productAttributes' || key == 'tags') {
+      formData.append(`${key}`, value.toString())
+    } else {
+      formData.append(`${key}`, `${value}`)
+    }
+  }
+  formData.append('file', images.value)
+  return formData
 })
 
 onMounted(async () => {
@@ -75,7 +89,7 @@ function clearForm() {
 async function submit() {
   objectStore.setLoading(true)
   try {
-    const response = await objectStore.create(form.value)
+    const response = await objectStore.create(formData.value)
     if (response) {
       toast.add({
         severity: 'success',
@@ -83,7 +97,7 @@ async function submit() {
         detail: t('app.features.product.create.successMessage'),
         life: 3000
       })
-      router.push(`/products?editId=${response.id}`)
+      router.push(`/products?editId=${response.id}&new=1`)
       window.setTimeout(() => {
       }, 3000)
     }
@@ -121,7 +135,7 @@ async function submit() {
           </div>
           <!-- PRODUCT IMAGE -->
           <div class="col-12 md:col-5">
-            <FileUploader />
+            <FileUploader @file-selected="(event: File | string) => { images = event }" />
           </div>
 
           <!-- PRODUCT MAIN INFO -->

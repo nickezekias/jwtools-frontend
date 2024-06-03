@@ -35,7 +35,7 @@ export const useProductStore = defineStore('product', () => {
     return response.data.data
   }
 
-  async function create(data: Obj) {
+  async function create(data: FormData | Obj) {
     const response = await objectService.createObject(data)
     return response.data.data
   }
@@ -48,7 +48,7 @@ export const useProductStore = defineStore('product', () => {
   async function update(
     payload: Record<string, unknown> & {
       id: number
-      data: Obj
+      data: FormData | Obj
     }
   ) {
     const response = await objectService.updateObject(payload)

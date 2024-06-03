@@ -3,7 +3,7 @@ import axios from '@/lib/axios'
 
 const url = '/products'
 
-const createObject = function (data: Obj) {
+const createObject = function (data: FormData | Obj) {
   return axios.post(url, data)
 }
 
@@ -14,7 +14,7 @@ const massCreate = function(data: Array<Obj>) {
 const updateObject = function (
   payload: Record<string, unknown> & {
     id: number
-    data: Obj
+    data: FormData | Obj
   }
 ) {
   return axios.put(`${url}/${payload.id}`, payload.data)

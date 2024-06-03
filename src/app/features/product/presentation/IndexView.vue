@@ -98,6 +98,11 @@ function closeEditDialog() {
   isEditDialog.value = false
 }
 
+function getImageSrc(url: string) {
+  const imgUrl = `${import.meta.env.VITE_API_BASE_URL}`;
+  return `${imgUrl}/${url}`
+}
+
 function getStatusSeverity(status: string) {
   if (status == 'Disponible') {
     return 'info'
@@ -248,7 +253,11 @@ function showEditDialogOnRouteChange(editIdQuery: string) {
 
           <PrimeColumn :header="$t('labels.image')">
             <template #body="slotProps">
+              <!-- <img class="w-6 dbg-border" id="upload-img" :style="`background-image: url('${getImageSrc(slotProps.data.images)}');`" /> -->
+              <PrimeAvatar v-if="slotProps.data.images != ''"  :image="getImageSrc(slotProps.data.images)" class="" size="xlarge" shape="circle" />
+
               <svg
+                  v-else
                   fill="#e2e8f0"
                   viewBox="0 0 100 100"
                   enable-background="new 0 0 100 100"
