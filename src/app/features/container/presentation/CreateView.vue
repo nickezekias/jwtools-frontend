@@ -180,7 +180,7 @@ async function submit() {
             <span class="text-2xl font-semibold">{{
               $t('app.features.container.create.containerImage')
             }}</span>
-            <FileUploader />
+            <FileUploader class="h-6"/>
           </div>
 
           <div class="col-12 mt-5">
