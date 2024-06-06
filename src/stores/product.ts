@@ -13,7 +13,6 @@ export const useProductStore = defineStore('product', () => {
 
   function getProductsForContainer(sku: string) {
     return objects.value.filter((val: Obj) => {
-      console.log(val.container, sku)
       return val.container == sku
     })
   }

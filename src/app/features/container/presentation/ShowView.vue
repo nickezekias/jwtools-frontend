@@ -51,7 +51,6 @@ const stats = ref([
 ])
 
 onMounted(async () => {
-  console.log(props.data)
   if (objectStore.objects.length < 1) {
     await objectStore.getAll({ itemsPerPage: -1, sortBy: ['products.name'] })
     containerProducts.value = objectStore.getProductsForContainer(`${props.data.sku}`)

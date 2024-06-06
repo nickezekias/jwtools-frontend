@@ -135,7 +135,7 @@ async function submit() {
           </div>
           <!-- PRODUCT IMAGE -->
           <div class="col-12 md:col-5">
-            <FileUploader @file-selected="(event: File | string) => { images = event }" />
+            <FileUploader @file-selected="(event: File) => { images = event }" />
           </div>
 
           <!-- PRODUCT MAIN INFO -->
