@@ -30,7 +30,6 @@ const containers = ref()
 const brand = ref()
 const categories = ref()
 const color = ref()
-const colorPicker = ref('')
 const componentLoading = ref(false)
 const container = ref()
 const cost = ref()
@@ -38,16 +37,16 @@ const description = ref()
 const dimensions = ref()
 const images = ref()
 const locale = ref('fr-FR')
-const name = ref()
+const name = ref('')
 const price = cost
 const quantity = ref(1)
 const qrCode = ref()
 const serial = ref()
-const sku = ref()
-const state = ref()
-const status = ref()
+const sku = ref('')
+const state = ref('')
+const status = ref('')
 const tags: Ref<Array<string>> = ref([])
-const type = ref()
+const type = ref('')
 const unitOfMeasure = ref()
 //FIXME: static warehouse
 const warehouse = ref()
@@ -64,7 +63,7 @@ const form = computed((): Product => {
     cost: cost.value,
     description: description.value,
     dimensions: dimensions.value,
-    images: images.value.toString(),
+    images: images.value,
     locale: locale.value,
     name: name.value,
     parent: 0,
@@ -83,9 +82,31 @@ const form = computed((): Product => {
   }
 })
 
+const formData = computed(() => {
+  const formData = new FormData()
+  for(let [key, value] of Object.entries(form.value)) {
+    if (key == 'productAttributes' || key == 'tags') {
+      formData.append(`${key}`, value.toString())
+    } else {
+      if (value == null) {
+        formData.append(`${key}`, '')
+      } else {
+        formData.append(`${key}`, value)
+      }
+    }
+  }
+  if (images.value instanceof File) {
+    formData.append('file', images.value)
+  }
+  return formData
+})
+
 const imageUrl = computed(() => {
-  const imgUrl = `${import.meta.env.VITE_API_BASE_URL}`;
-  return `${imgUrl}/${images.value}`
+  if (images.value != '') {
+    const imgUrl = `${import.meta.env.VITE_API_BASE_URL}`;
+    return `${imgUrl}/${images.value}`
+  }
+  return ''
 })
 
 const isCancelButtonDisabled = computed(() => {
@@ -150,7 +171,8 @@ function closeDialog() {
 }
 
 function fillForm(data: Product) {
-  productAttributes.value = data.productAttributes
+  // @ts-ignore attributes does not exist on type Product
+  productAttributes.value = data.attributes
   barcode.value = data.barcode
   brand.value = data.brand
   categories.value = data.categories
@@ -163,7 +185,7 @@ function fillForm(data: Product) {
   locale.value = data.locale
   name.value = data.name
   price.value = data.price
-  quantity.value = data.quantity
+  quantity.value = Number(data.quantity)
   qrCode.value = data.qrCode
   serial.value = data.serial
   sku.value = data.sku
@@ -179,7 +201,7 @@ async function submit() {
   objectStore.setLoading(true)
   try {
     if (props.data) {
-      const response = await objectStore.update({ id: props.data?.id, data: form.value })
+      const response = await objectStore.update({ id: props.data?.id, data: formData.value })
       if (response) {
         toast.add({
           severity: 'success',
@@ -210,6 +232,7 @@ async function submit() {
   <PrimeSidebar
     class="overflow-y-auto pb-4"
     :dismissable="false"
+    :modal="false"
     position="full"
     v-model:visible="model"
   >
@@ -228,7 +251,7 @@ async function submit() {
           <section class="grid">
             <!-- PRODUCT IMAGE -->
             <div class="col-12 md:col-5">
-              <FileUploader :extImageSrc="imageUrl"/>
+              <FileUploader :extImageSrc="imageUrl" @file-selected="(event: File) => { images = event }"/>
             </div>
 
             <!-- PRODUCT MAIN INFO -->

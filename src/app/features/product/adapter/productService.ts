@@ -17,7 +17,7 @@ const updateObject = function (
     data: FormData | Obj
   }
 ) {
-  return axios.put(`${url}/${payload.id}`, payload.data)
+  return axios.post(`${url}/${payload.id}?_method=PUT`, payload.data)
 }
 
 const deleteObject = function (id: number) {

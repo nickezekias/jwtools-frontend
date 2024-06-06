@@ -38,7 +38,7 @@ const columns = [
   // { field: 'quantity', header: t('labels.quantity') }
 ]
 
-const dialogMode = ref(objectStore.MODE_CREATE)
+const editDialogMode = ref(objectStore.MODE_EDIT)
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -170,7 +170,7 @@ function showDeleteDialog(id: number) {
 function showEditDialog(data: Product) {
   isEditDialog.value = true
   editData.value = data
-  dialogMode.value = objectStore.MODE_EDIT
+  editDialogMode.value = objectStore.MODE_EDIT
 }
 
 function showEditDialogOnRouteChange(editIdQuery: string) {
@@ -348,7 +348,7 @@ function showEditDialogOnRouteChange(editIdQuery: string) {
           onEdited(editedData)
         }
       "
-      :mode="dialogMode"
+      :mode="editDialogMode"
       v-if="isEditDialog"
       v-model="isEditDialog"
     />
