@@ -189,82 +189,6 @@ function uuidv4() {
 
         <!-- CONTENT -->
         <form class="m-0 w-full">
-          <!-- <table class="mass-create-table">
-            <thead>
-              <tr>
-                <th>{{ $t('labels.name') }}</th>
-                <th>{{ $t('labels.productType') }}</th>
-                <th>{{ $t('labels.container') }}</th>
-                <th>{{ $t('labels.sku') }}</th>
-                <th>{{ $t('labels.barcode') }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="i in rowCount" :key="i">
-                <td>
-                  <div class="field text-base md:text-lg">
-                    <label for="name">{{ $t('labels.name') }}</label>
-                    <input
-                      :ref="`name${i}`"
-                      id="name"
-                      type="text"
-                      class="text-color text-sm md:text-lg surface-overlay p-3 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-                    />
-                  </div>
-                </td>
-
-                <td>
-                  <div class="field text-base md:text-lg">
-                    <label for="type">{{ $t('labels.productType') }}</label>
-                    <PrimeDropdown
-                      :ref="`type${i}`"
-                      :options="productTypes"
-                      :placeholder="$t('placeholders.selectProductType')"
-                      class="w-full py-1"
-                    />
-                  </div>
-                </td>
-
-                <td>
-                  <div class="field text-base md:text-lg">
-                    <label for="name">{{ $t('labels.container') }}</label>
-                    <PrimeDropdown
-                      :ref="`container${i}`"
-                      optionLabel="name"
-                      optionValue="sku"
-                      :options="containers"
-                      :placeholder="$t('placeholders.selectContainer')"
-                      class="w-full py-1"
-                    />
-                  </div>
-                </td>
-
-                <td>
-                  <div class="field">
-                    <label for="sku">{{ $t('labels.sku') }}</label>
-                    <input
-                      :ref="`sku${i}`"
-                      id="sku"
-                      type="text"
-                      class="text-color text-sm md:text-lg surface-overlay p-3 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-                    />
-                  </div>
-                </td>
-
-                <td>
-                  <div class="field col-12 md:col">
-                    <label for="barcode">{{ $t('labels.barcode') }}</label>
-                    <input
-                      :ref="`barcode${i}`"
-                      id="barcode"
-                      type="text"
-                      class="text-color text-sm md:text-lg surface-overlay p-3 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-                    />
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table> -->
           <PrimeDataTable
             v-model:editingRows="editingRows"
             :value="objects"
@@ -310,6 +234,7 @@ function uuidv4() {
               </template>
             </PrimeColumn>
 
+
             <PrimeColumn field="sku" :header="$t('labels.sku')" style="width: 20%">
               <template #editor="{ data, field }">
                 <PrimeInputText v-model="data[field]" />
@@ -319,6 +244,17 @@ function uuidv4() {
             <PrimeColumn field="barcode" :header="$t('labels.barcode')" style="width: 20%">
               <template #editor="{ data, field }">
                 <PrimeInputText v-model="data[field]" />
+              </template>
+            </PrimeColumn>
+
+            <PrimeColumn field="categories" :header="$t('labels.category', 2)" style="width: 20%">
+              <template #editor="{ data, field }">
+                <PrimeDropdown
+                  v-model="data[field]"
+                  :options="categoriesList"
+                  :placeholder="$t('placeholders.selectCategory')"
+                >
+                </PrimeDropdown>
               </template>
             </PrimeColumn>
 
