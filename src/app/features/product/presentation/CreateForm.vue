@@ -97,7 +97,7 @@ async function submit() {
       }, 3000)
     }
   } catch (error) {
-    console.log(getApiErrors(error as AxiosError))
+    console.error(getApiErrors(error as AxiosError))
     toast.add({
       severity: 'error',
       summary: t("labels.error"),

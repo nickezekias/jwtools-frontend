@@ -51,7 +51,7 @@ onMounted(async () => {
   try {
     objects.value = await objectStore.getAll({ itemsPerPage: -1, sortBy: ['containers.name'] })
   } catch (error) {
-    console.log(getApiErrors(error as AxiosError))
+    console.error(getApiErrors(error as AxiosError))
     toast.add({
       severity: 'error',
       summary: t('labels.error'),
