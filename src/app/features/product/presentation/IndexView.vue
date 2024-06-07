@@ -215,7 +215,7 @@ function showEditDialogOnRouteChange(editIdQuery: string) {
       </PrimeToolbar>
     </nav>
     <div class="mt-4">
-      <div class="card shadow-1">
+      <div class="card shadow-1 mx-2 lg:mx-0">
         <PrimeDataTable
           v-model:filters="filters"
           :value="objects"
