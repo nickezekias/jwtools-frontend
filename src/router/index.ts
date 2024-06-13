@@ -25,7 +25,8 @@ const routes: any = [
   },
   {
     path: '/',
-    component: () => import('@/layouts/app/AppLayoutIndex.vue'),
+    // @ts-nocheck
+    component: () => import('@/layouts/AppLayout.vue'),
     children: [
       {
         path: 'products',

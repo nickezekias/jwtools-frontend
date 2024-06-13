@@ -13,6 +13,7 @@ import XLSX from 'xlsx'
 
 import DeleteDialog from './DeleteView.vue'
 import EditDialog from './EditView.vue'
+import GridView from './components/GridView.vue'
 import MassCreateDialog from './MassCreateView.vue'
 import type { Product } from '@/@types/model'
 
@@ -49,6 +50,8 @@ const filters = ref({
 })
 
 const { updateObjectsList } = useDataTableUtil()
+
+const isGridView = ref(true)
 
 const isEditDialog = ref(false)
 const editData: Ref<Product | null> = ref(null)
@@ -215,7 +218,8 @@ function showEditDialogOnRouteChange(editIdQuery: string) {
       </PrimeToolbar>
     </nav>
     <div class="mt-4">
-      <div class="card shadow-1 mx-2 lg:mx-0">
+      <GridView v-if="isGridView" :objects="objects" />
+      <div v-else class="card shadow-1 mx-2 lg:mx-0">
         <PrimeDataTable
           v-model:filters="filters"
           :value="objects"
