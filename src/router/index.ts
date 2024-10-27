@@ -51,6 +51,11 @@ const routes: any = [
             component: () => import('@/app/features/container/presentation/IndexView.vue')
           },
         ]
+      },
+      {
+        path: 'territories',
+        component: () => import('@/app/features/territory/presentation/IndexView.vue'),
+        name: 'territories.index'
       }
     ]
   }

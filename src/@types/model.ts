@@ -57,4 +57,20 @@ interface Product {
   updatedAt?: string
 }
 
-export type { Container, DBGetQueryFilter, Product }
+interface Territory {
+  id: number
+  code: string
+  quarter: string
+  createdAt?: string
+  updatedAt?: string
+}
+
+interface TerritoryQuarter {
+  id: number
+  name: string
+  code: string
+  createdAt?: string
+  updatedAt?: string
+}
+
+export type { Container, DBGetQueryFilter, Product, Territory, TerritoryQuarter }
